@@ -40,7 +40,7 @@ class CreateAccountScreen extends StatelessWidget {
                   TextWidgets(title: "Crear Cuenta", stylee: TextStyles.encabezado,),
                   SizedBox(height: screenHeight * 0.04),
 
-                  // Campo de texto para el Nombre emailAddress
+                  // Campo de texto para el Nombre email
                   SizedBox(
                     height: 50,
                     child: const CustomTextField(labelText: "Nombre")

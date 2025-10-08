@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/app_colors.dart'; // Asegúrate que la ruta sea correcta
+import '../../../../core/app_colors.dart';
 
 class InfoCard extends StatelessWidget {
   final Widget child;

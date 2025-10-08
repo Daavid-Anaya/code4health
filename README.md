@@ -98,7 +98,7 @@ Asegúrate de tener el [SDK de Flutter](https://flutter.dev/docs/get-started/ins
     ```
 2.  **Navega al directorio del proyecto:**
     ```sh
-    cd Code4Health
+    cd code4health
     ```
 3.  **Instala las dependencias:**
     ```sh

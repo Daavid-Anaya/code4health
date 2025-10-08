@@ -72,7 +72,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                   // Construimos cada tarjeta del historial
                   child: Container(
                     decoration: BoxDecoration(
-                      color: AppColors.backgroundComponentSelect, // Color de fondo de la tarjeta
+                      color: AppColors.backgroundComponentSelect,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(

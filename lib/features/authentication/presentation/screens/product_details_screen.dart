@@ -86,7 +86,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   Widget _buildDietaryInfo(double screenWidth, double screenHeight) {
     return Column(
       children: [
-        // El primer item tiene un estilo especial
+
         Container(
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02, vertical: screenHeight * 0.015),
           decoration: BoxDecoration(

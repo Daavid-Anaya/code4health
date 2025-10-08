@@ -30,7 +30,7 @@ class _UserInfoScreenState extends State<UserInfoScreen > {
       backgroundColor: AppColors.background,
       appBar: AppBar(
         backgroundColor: AppColors.background,
-        elevation: 0, // Sin sombra
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(

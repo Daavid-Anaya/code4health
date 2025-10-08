@@ -11,7 +11,7 @@ class CustomTextField extends StatelessWidget {
   const CustomTextField({
     super.key,
     required this.labelText,
-    this.isPassword = false, // Por defecto no es un campo de contraseña
+    this.isPassword = false,
     this.keyboardType = TextInputType.text,
   });
 

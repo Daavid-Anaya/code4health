@@ -47,7 +47,7 @@ class ProfileScreen extends StatelessWidget {
             children: [
               SizedBox(height: screenHeight * 0.025),
 
-              // Aquí irán el avatar, nombre, y las tarjetas de información
+              // avatar, nombre, y las tarjetas de información
               CircleAvatar(
                 radius: screenWidth * 0.12,
                 backgroundColor: Colors.grey,
@@ -62,7 +62,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.03),
 
-              // Aquí irán las tarjetas de Edad, Peso y Altura
+              // tarjetas de Edad, Peso y Altura
               Container(
                 padding: EdgeInsets.all(screenWidth * 0.04),
                 decoration: BoxDecoration(
@@ -72,7 +72,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    // Cada StatCard está envuelta en Expanded para que ocupe el espacio disponible.
                     const Expanded(child: StatCard(label: 'Edad', value: '28')),
                     SizedBox(width: screenWidth * 0.03),
                     const Expanded(child: StatCard(label: 'Peso', value: '70')),
@@ -83,11 +82,11 @@ class ProfileScreen extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.03),
 
-              // Aquí irá la tarjeta del IMC
+              // tarjeta del IMC
               BmiGaugeCard(bmi: imc),
               SizedBox(height: screenHeight * 0.03),
 
-              // Aquí irá la tarjeta de consumo calórico
+              // tarjeta de consumo calórico
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.all(screenHeight * 0.04),

@@ -12,7 +12,7 @@ class BmiGaugeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // La lógica para determinar el estado se mueve aquí
+    // La lógica para determinar el estado
     final String status;
     final String message;
     final Color statusColor;
@@ -35,7 +35,7 @@ class BmiGaugeCard extends StatelessWidget {
       statusColor = Colors.red;
     }
 
-    // La lógica para normalizar el valor del IMC también se mueve aquí
+    // La lógica para normalizar el valor del IMC
     final double normalizedBmi = (bmi.clamp(15, 40) - 15) / (40 - 15);
     final double alignmentX = normalizedBmi * 2 - 1;
 

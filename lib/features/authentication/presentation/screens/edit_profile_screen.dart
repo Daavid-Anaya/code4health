@@ -16,7 +16,6 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
-  // --- Variables de estado para cada campo del formulario ---
 
   // Info Básica
   String? _selectedGender;
@@ -43,7 +42,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.bar,
         elevation: 0,
-        // El botón de "atrás" se añade automáticamente por Navigator.push
+
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -51,7 +50,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // --- Aquí construiremos cada sección del formulario ---
 
               // Avatar
               SizedBox(height: screenHeight * 0.02),
@@ -140,7 +138,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               // Steppers de Edad y Peso
               Row(
                 children: [
-                  // --- REEMPLAZO ---
                   Expanded(
                     child: ValueStepper(
                       label: 'Edad',
@@ -219,7 +216,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              // Últimos campos de texto
+              // campos de texto
               Container(
                 child: Column(
                   children: [
