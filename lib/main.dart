@@ -4,12 +4,14 @@ import 'features/authentication/presentation/screens/login_screen.dart';
 import 'firebase_options.dart';
 
 void main() async {
-
+  // Aseguramos que los widgets de Flutter estén inicializados
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Inicializa Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(const MyApp());
 }
 
