@@ -1,7 +1,7 @@
 import 'package:code4health/features/authentication/presentation/screens/user_info_screen.dart';
-import 'package:code4health/core/app_colors.dart';
+import 'package:code4health/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/text_styles.dart';
+import '../../../../core/constants/text_styles.dart';
 import '../widgets/auth_navigation_link.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/img_widgets.dart';

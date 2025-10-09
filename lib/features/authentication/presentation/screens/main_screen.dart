@@ -2,7 +2,7 @@ import 'package:code4health/features/authentication/presentation/screens/profile
 import 'package:code4health/features/authentication/presentation/screens/scanner_screen.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/app_colors.dart';
+import '../../../../core/constants/app_colors.dart';
 import 'history_screen.dart';
 
 class MainScreen extends StatefulWidget {

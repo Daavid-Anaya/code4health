@@ -1,7 +1,7 @@
 import 'package:code4health/features/authentication/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/app_colors.dart';
-import '../../../../core/text_styles.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/text_styles.dart';
 
 // Un pequeño modelo de datos para representar un item del historial
 class HistoryItem {

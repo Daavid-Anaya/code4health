@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../core/app_colors.dart';
-import '../../../../core/text_styles.dart';
+import '../../../../core/constants/app_colors.dart';
+import '../../../../core/constants/text_styles.dart';
 import '../widgets/custom_dropdown_form_field.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/primary_action_button.dart';

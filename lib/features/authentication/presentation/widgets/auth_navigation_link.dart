@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../core/text_styles.dart';
+import '../../../../core/constants/text_styles.dart';
 
 class AuthNavigationLink extends StatelessWidget {
   final String promptText;

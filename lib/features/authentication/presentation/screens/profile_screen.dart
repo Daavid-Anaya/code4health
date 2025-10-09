@@ -1,7 +1,7 @@
-import 'package:code4health/core/app_colors.dart';
+import 'package:code4health/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/text_styles.dart';
+import '../../../../core/constants/text_styles.dart';
 import '../widgets/bmi_gauge_card.dart';
 import '../widgets/stat_card.dart';
 import 'edit_profile_screen.dart';
