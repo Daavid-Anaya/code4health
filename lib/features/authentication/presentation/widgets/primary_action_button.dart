@@ -5,7 +5,7 @@ import '../../../../core/constants/text_styles.dart';
 
 class PrimaryActionButton extends StatelessWidget {
   final String text;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const PrimaryActionButton({
     super.key,

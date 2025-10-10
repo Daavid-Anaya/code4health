@@ -1,6 +1,10 @@
-import 'package:code4health/features/authentication/presentation/screens/user_info_screen.dart';
 import 'package:code4health/core/constants/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:code4health/injection_container.dart';
+import '../../domain/usecases/sign_in_use_case.dart';
+
 import '../../../../core/constants/text_styles.dart';
 import '../widgets/auth_navigation_link.dart';
 import '../widgets/custom_text_field.dart';
@@ -10,8 +14,60 @@ import '../widgets/primary_action_button.dart';
 import '../widgets/text_widgets.dart';
 import 'create_account_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  // Controladores para obtener el texto de los campos
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  // Variable para manejar el estado de carga
+  bool _isLoading = false;
+
+  // Obtenemos la instancia del caso de uso desde el service locator
+  final SignInUseCase _signInUseCase = sl<SignInUseCase>();
+
+  // Limpiamos los controladores al destruir el widget
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  // Lógica de inicio de sesión
+  Future<void> _signIn() async {
+    setState(() { _isLoading = true; });
+
+    try {
+      await _signInUseCase.call(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
+      );
+      // Si el inicio de sesión es exitoso, el AuthGate se encargará de la navegación.
+
+    } on FirebaseAuthException catch (e) {
+      String message = "Ocurrió un error. Inténtalo de nuevo.";
+      if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-credential') {
+        message = "Correo o contraseña incorrectos.";
+      }
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() { _isLoading = false; });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,52 +93,48 @@ class LoginScreen extends StatelessWidget {
                   // Logo de la aplicación
                   ImgWidgets(proporcion:  screenHeight),
                   SizedBox(height: screenHeight * 0.04),
-                  
+
                   // Titulo
                   TextWidgets(title: "Iniciar Sesión", stylee: TextStyles.encabezado,),
                   SizedBox(height: screenHeight * 0.04),
-              
-                  // Campo de texto para el Nombre
+
+                  // Campo de texto para el Email
                   SizedBox(
                     height: 50,
-                    child: const CustomTextField(
-                      labelText: 'Nombre',
+                    child: CustomTextField(
+                      controller: _emailController,
+                      labelText: 'Email',
+                      keyboardType: TextInputType.emailAddress,
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.04),
-              
+
                   // Campo de texto para la Contraseña
                   SizedBox(
                     height: 50,
-                    child: const CustomTextField(
+                    child: CustomTextField(
+                      controller: _passwordController,
                       labelText: 'Contraseña',
                       isPassword: true,
                       keyboardType: TextInputType.text
                     ),
                   ),
                   SizedBox(height: screenHeight * 0.05),
-              
+
                   // Botón de Iniciar
                   FractionallySizedBox(
                     widthFactor: 0.4,
                       child: PrimaryActionButton(
-                        text: 'Iniciar',
-                        onPressed: () {
-                          // TODO: Lógica para iniciar sesión
-              
-                          // Después de registrar al usuario, navega a la pantalla de información
-                          Navigator.of(context).pushReplacement( // Usamos pushReplacement para que el usuario no pueda volver a "Crear Cuenta"
-                            MaterialPageRoute(builder: (context) => UserInfoScreen()),
-                          );
-                        },
+                        text: _isLoading ? 'Ingresando...' : 'Iniciar',
+                        onPressed: _isLoading ? null : _signIn, // Se deshabilita durante la carga
                       ),
                   ),
                   SizedBox(height: screenHeight * 0.04),
-              
+
                   // Divisor con "O"
                   const OrDivider(),
                   SizedBox(height: screenHeight * 0.04),
-              
+
                   // Botones de inicio de sesión social
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +158,7 @@ class LoginScreen extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: screenWidth * 0.05),
-              
+
                   // Texto y botón para registrarse
                   AuthNavigationLink(
                     promptText: 'No tienes una cuenta',
@@ -118,7 +170,7 @@ class LoginScreen extends StatelessWidget {
                       );
                     },
                   ),
-              
+
                 ],
               ),
             ),

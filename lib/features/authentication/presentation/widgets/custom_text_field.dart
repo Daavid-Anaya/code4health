@@ -7,17 +7,20 @@ class CustomTextField extends StatelessWidget {
   final String labelText;
   final bool isPassword;
   final TextInputType keyboardType;
+  final TextEditingController? controller;
 
   const CustomTextField({
     super.key,
     required this.labelText,
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
+    this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      controller: controller,
       obscureText: isPassword,
       keyboardType: keyboardType,
       style: TextStyles.parrafo,

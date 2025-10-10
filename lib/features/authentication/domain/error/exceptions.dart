@@ -1,0 +1,3 @@
+class RequiresRecentLoginException implements Exception {
+
+}
