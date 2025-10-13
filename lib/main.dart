@@ -1,22 +1,29 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'core/constants/env.dart';
 import 'firebase_options.dart';
 import 'injection_container.dart' as di;
 import 'package:code4health/auth_gate.dart';
 
 void main() async {
+  
   // Aseguramos que los widgets de Flutter estén inicializados
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Env.initEnvironment();
+
   // Inicializa Firebase
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (Firebase.apps.isEmpty) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   // Contenedor de dependencias
   await di.init();
 
   runApp(const MyApp());
+  
 }
 
 class MyApp extends StatelessWidget {

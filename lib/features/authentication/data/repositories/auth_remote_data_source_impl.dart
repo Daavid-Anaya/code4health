@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'auth_remote_data_source.dart';
+import '../datasources/auth_remote_data_source.dart';
 
 class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   final FirebaseAuth _firebaseAuth;
@@ -38,5 +38,10 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   @override
   Future<void> updateUsername({required String username}) {
     return _firebaseAuth.currentUser!.updateDisplayName(username);
+  }
+
+  @override
+  String? getCurrentUserId() {
+    return _firebaseAuth.currentUser?.uid;
   }
 }

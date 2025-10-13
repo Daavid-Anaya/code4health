@@ -8,4 +8,5 @@ abstract class AuthRemoteDataSource {
   Future<void> signOut();
   Future<void> deleteAccount();
   Future<void> updateUsername({required String username});
+  String? getCurrentUserId();
 }

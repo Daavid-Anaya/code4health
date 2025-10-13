@@ -6,7 +6,7 @@ class AuthRepositoryImpl implements AuthRepository {
   // abstracción del DataSource
   final AuthRemoteDataSource remoteDataSource;
 
-  // nstancia de FirebaseAuth
+  // Instancia de FirebaseAuth
   AuthRepositoryImpl({required this.remoteDataSource});
 
   @override
@@ -14,7 +14,6 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<void> signInWithEmailAndPassword({required String email, required String password}) {
-    // Delega la llamada al DataSource
     return remoteDataSource.signInWithEmailAndPassword(email: email, password: password);
   }
 
@@ -40,5 +39,10 @@ class AuthRepositoryImpl implements AuthRepository {
 
   Future<void> updateUsername({required String username}) {
     return remoteDataSource.updateUsername(username: username);
+  }
+
+  @override
+  String? getCurrentUserId() {
+    return remoteDataSource.getCurrentUserId();
   }
 }

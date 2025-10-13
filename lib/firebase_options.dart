@@ -4,8 +4,6 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
-import 'core/constants/env.dart';
-
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
 /// Example:
@@ -51,20 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static final FirebaseOptions android = FirebaseOptions(
-    apiKey: Env.apiKeyAndroid,
-    appId: '1:507675554483:android:7705a6e4fe1f1763b576c6',
-    messagingSenderId: '507675554483',
-    projectId: 'code4health-8cb7c',
-    storageBucket: 'code4health-8cb7c.firebasestorage.app',
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBJnidt7E2IK7x7uqs6j6PGlb5TjZe0Ytc',
+    appId: '1:457972502709:android:396e6f0e2f7a37a29e6efc',
+    messagingSenderId: '457972502709',
+    projectId: 'code4health-891a4',
+    storageBucket: 'code4health-891a4.firebasestorage.app',
   );
 
-  static final FirebaseOptions ios = FirebaseOptions(
-    apiKey: Env.apiKeyIOS,
-    appId: '1:507675554483:ios:b445b1e3bb31000eb576c6',
-    messagingSenderId: '507675554483',
-    projectId: 'code4health-8cb7c',
-    storageBucket: 'code4health-8cb7c.firebasestorage.app',
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBfjwXBAg5jU7bgob7LD758C1fkGLR3JXc',
+    appId: '1:457972502709:ios:fc6be2799be87af39e6efc',
+    messagingSenderId: '457972502709',
+    projectId: 'code4health-891a4',
+    storageBucket: 'code4health-891a4.firebasestorage.app',
     iosBundleId: 'com.david.code4health',
   );
+
 }
