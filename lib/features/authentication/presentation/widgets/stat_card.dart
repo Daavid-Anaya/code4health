@@ -14,21 +14,19 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: AppColors.backgroundComponent,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppColors.backgroundComponent),
-        ),
-        child: Column(
-          children: [
-            Text(label, style: TextStyles.etiqueta),
-            const SizedBox(height: 4),
-            Text(value, style: TextStyles.subEncabezado),
-          ],
-        ),
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.backgroundComponent,
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: AppColors.backgroundComponent),
+      ),
+      child: Column(
+        children: [
+          Text(label, style: TextStyles.etiqueta),
+          const SizedBox(height: 4),
+          Text(value, style: TextStyles.subEncabezado),
+        ],
       ),
     );
   }

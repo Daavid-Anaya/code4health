@@ -26,7 +26,7 @@ class TextStyles {
   );
 
   static const TextStyle etiqueta = TextStyle(
-    color: AppColors.grey400,
+    color: AppColors.body,
     fontSize: 14.0,
   );
 

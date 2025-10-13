@@ -8,6 +8,7 @@ class ValueStepper extends StatelessWidget {
   final int value;
   final VoidCallback onDecrement;
   final VoidCallback onIncrement;
+  final double screenHeight;
 
   const ValueStepper({
     super.key,
@@ -15,6 +16,7 @@ class ValueStepper extends StatelessWidget {
     required this.value,
     required this.onDecrement,
     required this.onIncrement,
+    required this.screenHeight,
   });
 
   @override
@@ -28,12 +30,12 @@ class ValueStepper extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               IconButton(
-                iconSize: 40.0,
+                iconSize: screenHeight * 0.055,
                 icon: const Icon(Icons.remove_circle, color: AppColors.primary, ),
                 onPressed: onDecrement,
               ),
               IconButton(
-                iconSize: 40.0,
+                iconSize: screenHeight * 0.055,
                 icon: const Icon(Icons.add_circle, color: AppColors.primary),
                 onPressed: onIncrement,
               ),

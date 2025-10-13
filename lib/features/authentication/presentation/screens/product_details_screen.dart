@@ -143,10 +143,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         ),
         SizedBox(height: screenHeight * 0.02),
         SizedBox(
-          height: itemSize, // Altura fija para la lista horizontal
+          height: itemSize,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3, // Número de productos similares de ejemplo
+            itemCount: 3, // Número de productos similares
             itemBuilder: (context, index) {
               return Container(
                 width: itemSize,

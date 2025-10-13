@@ -54,7 +54,8 @@ class BmiGaugeCard extends StatelessWidget {
             style: TextStyle(
                 color: AppColors.body,
                 fontSize: 38,
-                fontWeight: FontWeight.bold),
+                fontWeight: FontWeight.bold
+              ),
           ),
           const SizedBox(height: 8),
           const Text('Tu estado de nutrición es', style: TextStyles.etiqueta),
@@ -62,7 +63,8 @@ class BmiGaugeCard extends StatelessWidget {
           Text(
             status,
             style: TextStyle(
-                color: statusColor, fontSize: 18, fontWeight: FontWeight.bold),
+                color: statusColor, fontSize: 18, fontWeight: FontWeight.bold
+              ),
           ),
           const SizedBox(height: 8),
 
@@ -100,9 +102,11 @@ class BmiGaugeCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 16),
-          Text(message,
-              style: const TextStyle(color: AppColors.body),
-              textAlign: TextAlign.center),
+          Text(
+            message,
+            style: const TextStyle(color: AppColors.body),
+            textAlign: TextAlign.center
+          ),
         ],
       ),
     );

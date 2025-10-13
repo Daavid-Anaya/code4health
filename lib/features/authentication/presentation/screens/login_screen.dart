@@ -1,4 +1,5 @@
 import 'package:code4health/core/constants/app_colors.dart';
+import 'package:code4health/features/authentication/presentation/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -22,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   // Controladores para obtener el texto de los campos
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -49,7 +51,6 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-      // Si el inicio de sesión es exitoso, el AuthGate se encargará de la navegación.
 
     } on FirebaseAuthException catch (e) {
       String message = "Ocurrió un error. Inténtalo de nuevo.";
@@ -119,21 +120,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       keyboardType: TextInputType.text
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.05),
+                  //SizedBox(height: screenHeight * 0.03),
+
+                  // Enlace para "¿Olvidaste tu contraseña?"
+                  Padding(
+                    padding: EdgeInsets.only(bottom: screenHeight * 0.02),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => const ResetPasswordScreen()),
+                          );
+                        },
+                        child: const Text('¿Olvidaste tu contraseña?', style: TextStyles.leyenda),
+                      ),
+                    ),
+                  ),
 
                   // Botón de Iniciar
                   FractionallySizedBox(
-                    widthFactor: 0.4,
+                    widthFactor: 0.6,
                       child: PrimaryActionButton(
                         text: _isLoading ? 'Ingresando...' : 'Iniciar',
                         onPressed: _isLoading ? null : _signIn, // Se deshabilita durante la carga
                       ),
                   ),
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenHeight * 0.03),
 
                   // Divisor con "O"
                   const OrDivider(),
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenHeight * 0.03),
 
                   // Botones de inicio de sesión social
                   Row(
@@ -164,7 +181,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     promptText: 'No tienes una cuenta',
                     linkText: 'Registrarme',
                     onPressed: () {
-                      // TODO: Navegar a la pantalla de registro
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => CreateAccountScreen()),
                       );

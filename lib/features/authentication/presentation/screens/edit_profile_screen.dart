@@ -55,7 +55,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(height: screenHeight * 0.02),
               Center(
                 child: CircleAvatar(
-                  radius: screenWidth * 0.12,
+                  radius: screenWidth * 0.16,
                   backgroundColor: Colors.grey,
                   child: Icon(Icons.person, size: screenWidth * 0.12, color: Colors.white),
                 ),
@@ -63,18 +63,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(height: screenHeight * 0.02),
 
               // Campos de texto
-              Container(
-                child: Column(
-                  children: [
-                    CustomTextField(labelText:'Nombre'),
-                    const SizedBox(height: 12),
-                    CustomTextField(labelText: 'Email'),
-                    const SizedBox(height: 12),
-                    CustomTextField(labelText: 'Contraseña', isPassword: true),
-                    const SizedBox(height: 12),
-                    CustomTextField(labelText: 'Confirmar Contraseña', isPassword: true),
-                  ],
-                ),
+              Column(
+                children: [
+                  CustomTextField(labelText:'Nombre'),
+                  const SizedBox(height: 12),
+                  CustomTextField(labelText: 'Email'),
+                  const SizedBox(height: 12),
+                  CustomTextField(labelText: 'Contraseña', isPassword: true),
+                  const SizedBox(height: 12),
+                  CustomTextField(labelText: 'Confirmar Contraseña', isPassword: true),
+                ],
               ),
               SizedBox(height: screenHeight * 0.02),
 
@@ -144,15 +142,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       value: _edad,
                       onDecrement: () => setState(() => _edad--),
                       onIncrement: () => setState(() => _edad++),
+                      screenHeight: screenHeight,
                     ),
                   ),
-                  SizedBox(width: screenHeight * 0.04),
+                  SizedBox(width: screenHeight * 0.02),
                   Expanded(
                     child: ValueStepper(
                       label: 'Peso',
                       value: _peso,
                       onDecrement: () => setState(() => _peso--),
                       onIncrement: () => setState(() => _peso++),
+                      screenHeight: screenHeight,
                     ),
                   ),
                 ],
@@ -217,16 +217,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               SizedBox(height: screenHeight * 0.02),
 
               // campos de texto
-              Container(
-                child: Column(
-                  children: [
-                    CustomTextField(labelText: 'Presión sanguínea sistólica (mmHg)'),
-                    const SizedBox(height: 12),
-                    CustomTextField(labelText: 'HDL (lipoproteína de alta densidad)'),
-                    const SizedBox(height: 12),
-                    CustomTextField(labelText: 'Colesterol'),
-                  ],
-                ),
+              Column(
+                children: [
+                  CustomTextField(labelText: 'Presión sanguínea sistólica (mmHg)'),
+                  const SizedBox(height: 12),
+                  CustomTextField(labelText: 'HDL (lipoproteína de alta densidad)'),
+                  const SizedBox(height: 12),
+                  CustomTextField(labelText: 'Colesterol'),
+                ],
               ),
               SizedBox(height: screenHeight * 0.03),
 
@@ -236,7 +234,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 child: PrimaryActionButton(
                   text: 'Guardar',
                   onPressed: () {
-                    // TODO: Lógica para guardar todos los datos del formulario
+                    // TODO: Lógica para guardar todos los datos del perfil
 
                     Navigator.of(context).pop(); // Regresa a la pantalla de perfil
                   },
