@@ -21,11 +21,11 @@ class BmiGaugeCard extends StatelessWidget {
       status = 'Bajo peso';
       message = 'Es importante consultar a un profesional.';
       statusColor = Colors.blue;
-    } else if (bmi < 25) {
+    } else if (bmi < 25.0) {
       status = 'Peso saludable';
       message = '¡Felicidades, continúa con un peso saludable!';
       statusColor = Colors.green;
-    } else if (bmi < 30) {
+    } else if (bmi < 30.0) {
       status = 'Sobrepeso';
       message = 'Considera ajustar tus hábitos alimenticios.';
       statusColor = Colors.orange;
@@ -36,7 +36,7 @@ class BmiGaugeCard extends StatelessWidget {
     }
 
     // La lógica para normalizar el valor del IMC
-    final double normalizedBmi = (bmi.clamp(15, 40) - 15) / (40 - 15);
+    final double normalizedBmi = (bmi.clamp(5, 40) - 5) / (40 - 5);
     final double alignmentX = normalizedBmi * 2 - 1;
 
     return Container(

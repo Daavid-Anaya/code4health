@@ -7,11 +7,65 @@ import 'package:flutter/material.dart';
 import 'package:code4health/features/authentication/presentation/screens/edit_profile_screen.dart';
 import '../../../../auth_gate.dart';
 import '../../../../core/constants/text_styles.dart';
+import '../../domain/entities/user_profile_entity.dart';
+import '../../domain/usecases/calculate_caloric_consumption_use_case.dart';
+import '../../domain/usecases/get_user_profile_use_case.dart';
 import '../widgets/bmi_gauge_card.dart';
 import '../widgets/stat_card.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  // Obtenemos la instancia del caso de uso
+  final GetUserProfileUseCase _getUserProfileUseCase = sl<GetUserProfileUseCase>();
+  final CalculateCaloricConsumptionUseCase _calculateCaloriesUseCase = sl<CalculateCaloricConsumptionUseCase>();
+
+  // Variables de estado para manejar la carga y los datos
+  UserProfileEntity? _userProfile;
+  double? _caloricConsumption;
+  bool _isLoading = true;
+  String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUserProfile(); // Llamamos a la función para obtener datos al iniciar la pantalla
+  }
+
+  Future<void> _fetchUserProfile() async {
+    try {
+      final profile = await _getUserProfileUseCase.call();
+
+      double? calculatedCalories;
+      if (profile != null) {
+        // Si el perfil existe, llamamos al caso de uso para calcular las calorías
+        calculatedCalories = _calculateCaloriesUseCase.call(
+          peso: profile.peso,
+          altura: profile.altura,
+          edad: profile.edad,
+          sexo: profile.sexo,
+          nivelActividad: profile.nivelActividad,
+        );
+      }
+
+      setState(() {
+        _userProfile = profile;
+        _caloricConsumption = calculatedCalories;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = "Error al cargar el perfil.";
+        _isLoading = false;
+      });
+    }
+  }
 
   void _showOptionsMenu(BuildContext context) {
   // Obtenemos las instancias de los casos de uso
@@ -131,7 +185,7 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            
+
             // Botón de Cancelar (sin cambios)
             TextButton(
               onPressed: () {
@@ -146,17 +200,11 @@ class ProfileScreen extends StatelessWidget {
   );
 }
 
-
   @override
   Widget build(BuildContext context) {
 
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
-
-    // Datos de ejemplo
-    const double peso = 70; // kg
-    const double altura = 170; // cm
-    const double imc = peso / ((altura / 100) * (altura / 100));
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -174,74 +222,98 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
 
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: screenHeight * 0.025),
+      body: _buildBody(context, screenWidth, screenHeight),
+    );
+  }
 
-              // avatar, nombre, y las tarjetas de información
-              CircleAvatar(
-                radius: screenWidth * 0.12,
-                backgroundColor: Colors.grey,
-                child: Icon(Icons.person, size: screenWidth * 0.15, color: Colors.white),
+  Widget _buildBody(BuildContext context, double screenWidth, double screenHeight) {
+
+    // Indicador de carga mientras se obtienen los datos
+    if (_isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    // Muestra un mensaje de error si algo falló
+    if (_errorMessage != null) {
+      return Center(child: Text(_errorMessage!, style: const TextStyle(color: Colors.red)));
+    }
+    // Muestra un mensaje si el perfil no existe
+    if (_userProfile == null) {
+      return const Center(child: Text('No se encontró información del perfil.'));
+    }
+
+    // construye la UI con los datos reales
+    final double imc = _userProfile!.peso / ((_userProfile!.altura / 100) * (_userProfile!.altura / 100));
+
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: screenHeight * 0.025),
+
+            // avatar, nombre, y las tarjetas de información
+            CircleAvatar(
+              radius: screenWidth * 0.12,
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, size: screenWidth * 0.15, color: Colors.white),
+            ),
+            SizedBox(height: screenHeight * 0.02),
+
+            // Nombre
+            Text(
+              _userProfile!.name ?? 'Usuario',
+              style: TextStyles.subEncabezado,
+            ),
+            SizedBox(height: screenHeight * 0.03),
+
+            // tarjetas de Edad, Peso y Altura
+            Container(
+              padding: EdgeInsets.all(screenWidth * 0.04),
+              decoration: BoxDecoration(
+                color: AppColors.backgroundContainer,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.backgroundContainer),
               ),
-              SizedBox(height: screenHeight * 0.02),
-
-              // Nombre
-              const Text(
-                'Nombre', // Reemplazar con el nombre del usuario
-                style: TextStyles.subEncabezado,
+              child: Row(
+                children: [
+                  Expanded(child: StatCard(label: 'Edad', value: _userProfile!.edad.toString())),
+                  SizedBox(width: screenWidth * 0.03),
+                  Expanded(child: StatCard(label: 'Peso', value: _userProfile!.peso.toString())),
+                  SizedBox(width: screenWidth * 0.03),
+                  Expanded(child: StatCard(label: 'Altura', value: _userProfile!.altura.toString())),
+                ],
               ),
-              SizedBox(height: screenHeight * 0.03),
+            ),
+            SizedBox(height: screenHeight * 0.03),
 
-              // tarjetas de Edad, Peso y Altura
-              Container(
-                padding: EdgeInsets.all(screenWidth * 0.04),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundContainer,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.backgroundContainer),
-                ),
-                child: Row(
-                  children: [
-                    const Expanded(child: StatCard(label: 'Edad', value: '28')),
-                    SizedBox(width: screenWidth * 0.03),
-                    const Expanded(child: StatCard(label: 'Peso', value: '70')),
-                    SizedBox(width: screenWidth * 0.03),
-                    const Expanded(child: StatCard(label: 'Altura', value: '170')),
-                  ],
-                ),
+            // tarjeta del IMC
+            BmiGaugeCard(bmi: imc),
+            SizedBox(height: screenHeight * 0.03),
+
+            // tarjeta de consumo calórico
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(screenHeight * 0.04),
+              decoration: BoxDecoration(
+                color: AppColors.backgroundContainer,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: AppColors.backgroundContainer),
               ),
-              SizedBox(height: screenHeight * 0.03),
-
-              // tarjeta del IMC
-              BmiGaugeCard(bmi: imc),
-              SizedBox(height: screenHeight * 0.03),
-
-              // tarjeta de consumo calórico
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.all(screenHeight * 0.04),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundContainer,
-                  borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: AppColors.backgroundContainer),
-                ),
-                child: const Column(
-                  children: [
-                    Text('Consumo calórico', style: TextStyles.parrafo),
-                    SizedBox(height: 4),
-                    Text('2,411.41 kcal. por día', style: TextStyles.subEncabezado),
-                  ],
-                ),
+              child: Column(
+                children: [
+                  Text('Consumo calórico', style: TextStyles.parrafo),
+                  SizedBox(height: 4),
+                  Text(
+                    _caloricConsumption != null
+                    ? '${_caloricConsumption!.toStringAsFixed(2)} kcal. por día'
+                    : 'Calculando...',
+                    style: TextStyles.subEncabezado),
+                ],
               ),
-              SizedBox(height: screenHeight * 0.03),
-
-            ],
-          ),
+            ),
+            SizedBox(height: screenHeight * 0.03),
+          ],
         ),
       ),
     );

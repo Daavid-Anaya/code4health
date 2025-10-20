@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class UserProfileRemoteDataSource {
   Future<void> saveUserProfile(Map<String, dynamic> userData);
   Future<void> deleteUserData(String userId);
+  Future<Map<String, dynamic>?> getUserProfile();
 }
 
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
@@ -25,5 +26,18 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   Future<void> deleteUserData(String userId) async {
     final userDocRef = firestore.collection('users').doc(userId);
     await userDocRef.delete();
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getUserProfile() async {
+    final user = auth.currentUser;
+    if (user == null) throw Exception('Usuario no autenticado.');
+
+    final docSnapshot = await firestore.collection('users').doc(user.uid).get();
+
+    if (docSnapshot.exists) {
+      return docSnapshot.data();
+    }
+    return null;
   }
 }
