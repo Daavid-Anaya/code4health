@@ -10,5 +10,9 @@ abstract class AuthRepository {
   Future<void> sendPasswordResetEmail({required String email});
   Future<void> signOut();
   Future<void> deleteAccount();
-   String? getCurrentUserId();
+  String? getCurrentUserId();
+  Future<void> updateDisplayName(String newName);
+  //Future<void> updateEmail(String newEmail);
+  Future<void> updatePassword(String newPassword);
+  Future<void> reauthenticateWithCredential(String email, String password);
 }

@@ -9,4 +9,8 @@ abstract class AuthRemoteDataSource {
   Future<void> deleteAccount();
   Future<void> updateUsername({required String username});
   String? getCurrentUserId();
+  Future<void> updateDisplayName(String newName);
+  //Future<void> updateEmail(String newEmail);
+  Future<void> updatePassword(String newPassword);
+  Future<void> reauthenticateWithCredential(String email, String password);
 }

@@ -8,6 +8,8 @@ class CustomTextField extends StatelessWidget {
   final bool isPassword;
   final TextInputType keyboardType;
   final TextEditingController? controller;
+  final bool readOnly;
+
 
   const CustomTextField({
     super.key,
@@ -15,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.keyboardType = TextInputType.text,
     this.controller,
+    this.readOnly = false,
   });
 
   @override
@@ -23,6 +26,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       obscureText: isPassword,
       keyboardType: keyboardType,
+      readOnly: readOnly,
       style: TextStyles.parrafo,
       decoration: InputDecoration(
         labelText: labelText,

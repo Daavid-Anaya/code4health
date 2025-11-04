@@ -45,4 +45,24 @@ class AuthRepositoryImpl implements AuthRepository {
   String? getCurrentUserId() {
     return remoteDataSource.getCurrentUserId();
   }
+
+  @override
+  Future<void> updateDisplayName(String newName) {
+    return remoteDataSource.updateDisplayName(newName);
+  }
+
+  //@override
+  //Future<void> updateEmail(String newEmail) {
+  //  return remoteDataSource.updateEmail(newEmail);
+  //}
+
+  @override
+  Future<void> updatePassword(String newPassword) {
+    return remoteDataSource.updatePassword(newPassword);
+  }
+
+  @override
+  Future<void> reauthenticateWithCredential(String email, String password) {
+    return remoteDataSource.reauthenticateWithCredential(email, password);
+  }
 }

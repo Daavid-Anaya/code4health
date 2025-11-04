@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:code4health/core/constants/app_colors.dart';
 import 'package:code4health/features/authentication/presentation/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final Size screenSize = MediaQuery.of(context).size;
     final double screenWidth = screenSize.width;
     final double screenHeight = screenSize.height;
+    final currentDiagonal = sqrt(pow(screenWidth, 2) + pow(screenHeight, 2));
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -133,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             MaterialPageRoute(builder: (context) => const ResetPasswordScreen()),
                           );
                         },
-                        child: const Text('¿Olvidaste tu contraseña?', style: TextStyles.leyenda),
+                        child: Text('¿Olvidaste tu contraseña?', style: TextStyles.leyenda),
                       ),
                     ),
                   ),

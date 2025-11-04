@@ -7,6 +7,13 @@ class UserProfileEntity {
   final String sexo;
   final String nivelActividad;
 
+  final bool? tratamientoHipertension;
+  final bool? fumador;
+  final bool? diabetico;
+  final int? presionSistolica;
+  final int? hdl;
+  final int? colesterol;
+
   UserProfileEntity({
     required this.uid,
     this.name,
@@ -15,5 +22,12 @@ class UserProfileEntity {
     required this.altura,
     required this.sexo,
     required this.nivelActividad,
+
+    this.tratamientoHipertension,
+    this.fumador,
+    this.diabetico,
+    this.presionSistolica,
+    this.hdl,
+    this.colesterol,
   });
 }

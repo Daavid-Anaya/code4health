@@ -13,196 +13,138 @@ import '../../domain/usecases/get_user_profile_use_case.dart';
 import '../widgets/bmi_gauge_card.dart';
 import '../widgets/stat_card.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfileScreen extends StatelessWidget {
+  ProfileScreen({super.key});
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-
-  // Obtenemos la instancia del caso de uso
+  // Obtenemos las instancias de los casos de uso
   final GetUserProfileUseCase _getUserProfileUseCase = sl<GetUserProfileUseCase>();
   final CalculateCaloricConsumptionUseCase _calculateCaloriesUseCase = sl<CalculateCaloricConsumptionUseCase>();
 
-  // Variables de estado para manejar la carga y los datos
-  UserProfileEntity? _userProfile;
-  double? _caloricConsumption;
-  bool _isLoading = true;
-  String? _errorMessage;
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchUserProfile(); // Llamamos a la función para obtener datos al iniciar la pantalla
-  }
-
-  Future<void> _fetchUserProfile() async {
-    try {
-      final profile = await _getUserProfileUseCase.call();
-
-      double? calculatedCalories;
-      if (profile != null) {
-        // Si el perfil existe, llamamos al caso de uso para calcular las calorías
-        calculatedCalories = _calculateCaloriesUseCase.call(
-          peso: profile.peso,
-          altura: profile.altura,
-          edad: profile.edad,
-          sexo: profile.sexo,
-          nivelActividad: profile.nivelActividad,
-        );
-      }
-
-      setState(() {
-        _userProfile = profile;
-        _caloricConsumption = calculatedCalories;
-        _isLoading = false;
-      });
-    } catch (e) {
-      setState(() {
-        _errorMessage = "Error al cargar el perfil.";
-        _isLoading = false;
-      });
-    }
-  }
-
   void _showOptionsMenu(BuildContext context) {
-  // Obtenemos las instancias de los casos de uso
-  final signOutUseCase = sl<SignOutUseCase>();
-  final deleteAccountUseCase = sl<DeleteAccountUseCase>();
+    // Obtenemos las instancias de los casos de uso
+    final signOutUseCase = sl<SignOutUseCase>();
+    final deleteAccountUseCase = sl<DeleteAccountUseCase>();
 
-  showModalBottomSheet(
-    context: context,
-    backgroundColor: AppColors.backgroundContainer,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    builder: (BuildContext bottomSheetContext) {
-      // capturar el Navigator fuera de los callbacks asíncronos
-      final navigator = Navigator.of(context);
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: AppColors.backgroundContainer,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext bottomSheetContext) {
+        final navigator = Navigator.of(context);
 
-      return Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            // Editar Perfil
-            ListTile(
-              leading: const Icon(Icons.edit, color: Colors.white),
-              title: const Text('Editar Perfil', style: TextStyles.parrafo),
-              onTap: () {
-                Navigator.pop(bottomSheetContext);
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (context) => const EditProfileScreen()),
-                );
-              },
-            ),
-            const Divider(color: AppColors.bar),
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // Editar Perfil
+              ListTile(
+                leading: const Icon(Icons.edit, color: Colors.white),
+                title: const Text('Editar Perfil', style: TextStyles.parrafo),
+                onTap: () {
+                  Navigator.pop(bottomSheetContext);
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const EditProfileScreen()),
+                  );
+                },
+              ),
+              Divider(color: AppColors.bar),
 
-            // Cerrar Sesión
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.redAccent),
-              title: const Text('Cerrar Sesión', style: TextStyle(color: Colors.redAccent)),
-              onTap: () async {
-                Navigator.pop(bottomSheetContext);
-                await signOutUseCase.call();
+              // Cerrar Sesión
+              ListTile(
+                leading: const Icon(Icons.logout, color: Colors.redAccent),
+                title: const Text('Cerrar Sesión', style: TextStyle(color: Colors.redAccent)),
+                onTap: () async {
+                  Navigator.pop(bottomSheetContext);
+                  await signOutUseCase.call();
 
-                navigator.pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => const AuthGate()),
-                      (route) => false,
-                );
-              },
-            ),
-            const Divider(color: AppColors.bar),
-
-            // Eliminar Cuenta
-            ListTile(
-              leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
-              title: const Text('Eliminar Cuenta', style: TextStyle(color: Colors.redAccent)),
-              onTap: () async {
-                // Cerramos el menú de opciones inferior
-                Navigator.pop(bottomSheetContext);
-
-                // Mostramos el diálogo de confirmación
-                final bool? confirmacion = await showDialog<bool>(
-                  context: context,
-                  builder: (dialogContext) => AlertDialog(
-                    title: const Text('¿Estás seguro?'),
-                    content: const Text('Esta acción eliminará tu cuenta y todos tus datos de forma permanente. No se puede deshacer.'),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.of(dialogContext).pop(false),
-                        child: const Text('Cancelar'),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.of(dialogContext).pop(true),
-                        child: const Text('Eliminar', style: TextStyle(color: Colors.redAccent)),
-                      ),
-                    ],
-                  ),
-                );
-
-                // Si el usuario no confirmó, no hacemos nada más
-                if (confirmacion != true) {
-                  return;
-                }
-
-                //capturamos el ScaffoldMessenger antes de la operación asíncrona
-                final scaffoldMessenger = ScaffoldMessenger.of(context);
-                final rootNavigator = Navigator.of(context, rootNavigator: true);
-
-                // Mostrar un indicador de carga
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => const Center(child: CircularProgressIndicator()),
-                );
-
-                try {
-                  // Llamamos al caso de uso para eliminar la cuenta
-                  await deleteAccountUseCase.call();
-
-                  rootNavigator.pushAndRemoveUntil(
+                  navigator.pushAndRemoveUntil(
                     MaterialPageRoute(builder: (context) => const AuthGate()),
                         (route) => false,
                   );
-                } catch (e) {
-                  // Cierra el diálogo de carga si hay un error
-                  navigator.pop();
+                },
+              ),
+              Divider(color: AppColors.bar),
 
-                  // Mostramos un mensaje de error
-                  String errorMessage = 'Ocurrió un error inesperado.';
-                  if (e is RequiresRecentLoginException) {
-                    errorMessage = 'Por seguridad, debes volver a iniciar sesión para eliminar tu cuenta.';
-                  }
+              // Eliminar Cuenta
+              ListTile(
+                leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
+                title: const Text('Eliminar Cuenta', style: TextStyle(color: Colors.redAccent)),
+                onTap: () async {
+                  // Cerramos el menú de opciones inferior
+                  Navigator.pop(bottomSheetContext);
 
-                  // Usamos el 'scaffoldMessenger' capturado para mostrar el error
-                  scaffoldMessenger.showSnackBar(
-                    SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+                  // Mostramos el diálogo de confirmación
+                  final bool? confirmacion = await showDialog<bool>(
+                    context: context,
+                    builder: (dialogContext) => AlertDialog(
+                      title: const Text('¿Estás seguro?'),
+                      content: const Text('Esta acción eliminará tu cuenta y todos tus datos de forma permanente. No se puede deshacer.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.of(dialogContext).pop(false),
+                          child: const Text('Cancelar'),
+                        ),
+                        TextButton(
+                          onPressed: () => Navigator.of(dialogContext).pop(true),
+                          child: const Text('Eliminar', style: TextStyle(color: Colors.redAccent)),
+                        ),
+                      ],
+                    ),
                   );
-                }
-              },
-            ),
-            const SizedBox(height: 16),
 
-            // Botón de Cancelar (sin cambios)
-            TextButton(
-              onPressed: () {
-                Navigator.pop(bottomSheetContext);
-              },
-              child: const Text('Cancelar', style: TextStyle(color: Colors.white70)),
-            ),
-          ],
-        ),
-      );
-    },
-  );
-}
+                  if (confirmacion != true) return;
+
+                  final scaffoldMessenger = ScaffoldMessenger.of(context);
+                  final rootNavigator = Navigator.of(context, rootNavigator: true);
+
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) => const Center(child: CircularProgressIndicator()),
+                  );
+
+                  try {
+                    await deleteAccountUseCase.call();
+
+                    rootNavigator.pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => const AuthGate()),
+                          (route) => false,
+                    );
+                  } catch (e) {
+                    navigator.pop(); // Cierra el diálogo de carga
+
+                    String errorMessage = 'Ocurrió un error inesperado.';
+                    if (e is RequiresRecentLoginException) {
+                      errorMessage = 'Por seguridad, debes volver a iniciar sesión para eliminar tu cuenta.';
+                    }
+
+                    scaffoldMessenger.showSnackBar(
+                      SnackBar(content: Text(errorMessage), backgroundColor: Colors.red),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 16),
+
+              // Botón de Cancelar
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(bottomSheetContext);
+                },
+                child: const Text('Cancelar', style: TextStyle(color: Colors.white70)),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
@@ -214,7 +156,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.more_horiz, color: Colors.white,),
+            icon: const Icon(Icons.more_horiz, color: Colors.white),
             onPressed: () {
               _showOptionsMenu(context);
             },
@@ -222,99 +164,97 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
 
-      body: _buildBody(context, screenWidth, screenHeight),
-    );
-  }
+      body: StreamBuilder<UserProfileEntity?>(
 
-  Widget _buildBody(BuildContext context, double screenWidth, double screenHeight) {
+        stream: _getUserProfileUseCase.call(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-    // Indicador de carga mientras se obtienen los datos
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-    // Muestra un mensaje de error si algo falló
-    if (_errorMessage != null) {
-      return Center(child: Text(_errorMessage!, style: const TextStyle(color: Colors.red)));
-    }
-    // Muestra un mensaje si el perfil no existe
-    if (_userProfile == null) {
-      return const Center(child: Text('No se encontró información del perfil.'));
-    }
+          if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}', style: const TextStyle(color: Colors.red)));
+          }
 
-    // construye la UI con los datos reales
-    final double imc = _userProfile!.peso / ((_userProfile!.altura / 100) * (_userProfile!.altura / 100));
+          if (!snapshot.hasData || snapshot.data == null) {
+            return const Center(child: Text('No se encontró información del perfil.'));
+          }
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(height: screenHeight * 0.025),
+          final userProfile = snapshot.data!;
 
-            // avatar, nombre, y las tarjetas de información
-            CircleAvatar(
-              radius: screenWidth * 0.12,
-              backgroundColor: Colors.grey,
-              child: Icon(Icons.person, size: screenWidth * 0.15, color: Colors.white),
-            ),
-            SizedBox(height: screenHeight * 0.02),
+          // Calcula los valores derivados
+          final double imc = userProfile.peso / ((userProfile.altura / 100) * (userProfile.altura / 100));
+          final double caloricConsumption = _calculateCaloriesUseCase.call(
+            peso: userProfile.peso,
+            altura: userProfile.altura,
+            edad: userProfile.edad,
+            sexo: userProfile.sexo,
+            nivelActividad: userProfile.nivelActividad,
+          );
 
-            // Nombre
-            Text(
-              _userProfile!.name ?? 'Usuario',
-              style: TextStyles.subEncabezado,
-            ),
-            SizedBox(height: screenHeight * 0.03),
-
-            // tarjetas de Edad, Peso y Altura
-            Container(
-              padding: EdgeInsets.all(screenWidth * 0.04),
-              decoration: BoxDecoration(
-                color: AppColors.backgroundContainer,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.backgroundContainer),
-              ),
-              child: Row(
-                children: [
-                  Expanded(child: StatCard(label: 'Edad', value: _userProfile!.edad.toString())),
-                  SizedBox(width: screenWidth * 0.03),
-                  Expanded(child: StatCard(label: 'Peso', value: _userProfile!.peso.toString())),
-                  SizedBox(width: screenWidth * 0.03),
-                  Expanded(child: StatCard(label: 'Altura', value: _userProfile!.altura.toString())),
-                ],
-              ),
-            ),
-            SizedBox(height: screenHeight * 0.03),
-
-            // tarjeta del IMC
-            BmiGaugeCard(bmi: imc),
-            SizedBox(height: screenHeight * 0.03),
-
-            // tarjeta de consumo calórico
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.all(screenHeight * 0.04),
-              decoration: BoxDecoration(
-                color: AppColors.backgroundContainer,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColors.backgroundContainer),
-              ),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Consumo calórico', style: TextStyles.parrafo),
-                  SizedBox(height: 4),
+                  SizedBox(height: screenHeight * 0.025),
+                  CircleAvatar(
+                    radius: screenWidth * 0.12,
+                    backgroundColor: Colors.grey,
+                    child: Icon(Icons.person, size: screenWidth * 0.15, color: Colors.white),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
                   Text(
-                    _caloricConsumption != null
-                    ? '${_caloricConsumption!.toStringAsFixed(2)} kcal. por día'
-                    : 'Calculando...',
-                    style: TextStyles.subEncabezado),
+                    userProfile.name ?? 'Usuario',
+                    style: TextStyles.subEncabezado,
+                  ),
+                  SizedBox(height: screenHeight * 0.03),
+                  Container(
+                    padding: EdgeInsets.all(screenWidth * 0.04),
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundContainer,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.backgroundContainer),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(child: StatCard(label: 'Edad', value: userProfile.edad.toString())),
+                        SizedBox(width: screenWidth * 0.03),
+                        Expanded(child: StatCard(label: 'Peso', value: userProfile.peso.toString())),
+                        SizedBox(width: screenWidth * 0.03),
+                        Expanded(child: StatCard(label: 'Altura', value: userProfile.altura.toString())),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.03),
+                  BmiGaugeCard(bmi: imc),
+                  SizedBox(height: screenHeight * 0.03),
+                  Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.all(screenHeight * 0.04),
+                    decoration: BoxDecoration(
+                      color: AppColors.backgroundContainer,
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: AppColors.backgroundContainer),
+                    ),
+                    child: Column(
+                      children: [
+                        const Text('Consumo calórico', style: TextStyles.parrafo),
+                        const SizedBox(height: 4),
+                        Text(
+                            '${caloricConsumption.toStringAsFixed(2)} kcal. por día',
+                            style: TextStyles.subEncabezado
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.03),
                 ],
               ),
             ),
-            SizedBox(height: screenHeight * 0.03),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

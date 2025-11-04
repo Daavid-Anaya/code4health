@@ -44,4 +44,26 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
   String? getCurrentUserId() {
     return _firebaseAuth.currentUser?.uid;
   }
+
+  @override
+  Future<void> updateDisplayName(String newName) {
+    return _firebaseAuth.currentUser!.updateDisplayName(newName);
+  }
+
+  //@override
+  //Future<void> updateEmail(String newEmail) {
+    //return _firebaseAuth.currentUser!.updateEmail(newEmail);
+  //}
+
+  @override
+  Future<void> updatePassword(String newPassword) {
+    return _firebaseAuth.currentUser!.updatePassword(newPassword);
+  }
+
+  @override
+  Future<void> reauthenticateWithCredential(String email, String password) {
+    // Crea la credencial y re-autentica
+    final credential = EmailAuthProvider.credential(email: email, password: password);
+    return _firebaseAuth.currentUser!.reauthenticateWithCredential(credential);
+  }
 }

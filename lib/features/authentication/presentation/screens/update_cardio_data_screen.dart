@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../injection_container.dart';
+import '../../domain/entities/user_profile_entity.dart';
+import '../../domain/usecases/get_user_profile_use_case.dart';
+import '../../domain/usecases/update_user_profile_use_case.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/titled_switch.dart';
-import 'custom_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class UpdateCardioDataScreen extends StatefulWidget {
   const UpdateCardioDataScreen({super.key});
@@ -13,15 +17,28 @@ class UpdateCardioDataScreen extends StatefulWidget {
 }
 
 class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
-  // --- Estado MOVIDO aquí ---
+  // Inyecta los Casos de Uso
+  final _getUserProfileUseCase = sl<GetUserProfileUseCase>();
+  final _updateUserProfileUseCase = sl<UpdateUserProfileUseCase>();
+
+  // Define los estados de carga
+  bool _isScreenLoading = true;
+  bool _isSaving = false;
+
+  // Variables de estado
   bool _tratamientoHipertension = false;
   bool _fumador = false;
   bool _diabetico = false;
 
-  // Añadimos controladores para los campos de texto
   final _presionController = TextEditingController();
   final _hdlController = TextEditingController();
   final _colesterolController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
 
   @override
   void dispose() {
@@ -31,9 +48,72 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
     super.dispose();
   }
 
-  void _saveCardioData() {
-    // TODO: Lógica para guardar todos los datos cardiovasculares
-    Navigator.pop(context);
+  // Lógica para cargar los datos
+  Future<void> _loadData() async {
+    try {
+      final UserProfileEntity? profile = (_getUserProfileUseCase.call()) as UserProfileEntity?;
+      if (profile != null) {
+        // Rellena los widgets con los datos de Firestore
+        setState(() {
+          _tratamientoHipertension = profile.tratamientoHipertension ?? false;
+          _fumador = profile.fumador ?? false;
+          _diabetico = profile.diabetico ?? false;
+          _presionController.text = profile.presionSistolica?.toString() ?? '';
+          _hdlController.text = profile.hdl?.toString() ?? '';
+          _colesterolController.text = profile.colesterol?.toString() ?? '';
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al cargar datos: ${e.toString()}'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() { _isScreenLoading = false; });
+      }
+    }
+  }
+
+  // Lógica para guardar los datos
+  Future<void> _saveCardioData() async {
+    setState(() { _isSaving = true; });
+
+    // Prepara el mapa solo con los datos de esta pantalla
+    // Usamos int.tryParse para convertir los strings a números de forma segura
+    final Map<String, dynamic> dataToUpdate = {
+      'tratamientoHipertension': _tratamientoHipertension,
+      'fumador': _fumador,
+      'diabetico': _diabetico,
+      'presionSistolica': int.tryParse(_presionController.text),
+      'hdl': int.tryParse(_hdlController.text),
+      'colesterol': int.tryParse(_colesterolController.text),
+    };
+
+    // Filtra los valores nulos si los campos de texto están vacíos
+    dataToUpdate.removeWhere((key, value) => value == null && (key == 'presionSistolica' || key == 'hdl' || key == 'colesterol'));
+
+    try {
+      await _updateUserProfileUseCase.call(dataToUpdate);
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Datos actualizados con éxito.'), backgroundColor: Colors.green),
+        );
+        Navigator.of(context).pop();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al guardar: ${e.toString()}'), backgroundColor: Colors.red),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() { _isSaving = false; });
+      }
+    }
   }
 
   @override
@@ -44,15 +124,16 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
       backgroundColor: AppColors.background,
       appBar: buildSubPageAppBar(
         context: context,
-        title: 'cardio',
+        title: 'Datos Cardiovasculares',
         onSave: _saveCardioData,
       ),
-      body: SingleChildScrollView(
+      body: _isScreenLoading
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(screenHeight * 0.02),
           child: Column(
             children: [
-              // --- Widgets MOVIDOS aquí ---
               TitledSwitch(
                 label: 'Tratamiento de hipertensión',
                 value: _tratamientoHipertension,
@@ -78,7 +159,7 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: screenHeight * 0.03), // Más espacio antes de los campos
+              SizedBox(height: screenHeight * 0.03),
 
               CustomTextField(
                 labelText: 'Presión sanguínea sistólica (mmHg)',
@@ -97,6 +178,13 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
                 controller: _colesterolController,
                 keyboardType: TextInputType.number,
               ),
+
+              // Muestra un indicador si se está guardando
+              if (_isSaving)
+                const Padding(
+                  padding: EdgeInsets.only(top: 24.0),
+                  child: CircularProgressIndicator(),
+                ),
             ],
           ),
         ),

@@ -4,7 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 abstract class UserProfileRemoteDataSource {
   Future<void> saveUserProfile(Map<String, dynamic> userData);
   Future<void> deleteUserData(String userId);
-  Future<Map<String, dynamic>?> getUserProfile();
+  Stream<Map<String, dynamic>?> getUserProfileStream();
+  Future<void> updateUserProfile(Map<String, dynamic> data);
 }
 
 class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
@@ -29,15 +30,25 @@ class UserProfileRemoteDataSourceImpl implements UserProfileRemoteDataSource {
   }
 
   @override
-  Future<Map<String, dynamic>?> getUserProfile() async {
+  Stream<Map<String, dynamic>?> getUserProfileStream() {
+    final user = auth.currentUser;
+    if (user == null) {
+      // Emite un stream con un valor nulo si no hay usuario
+      return Stream.value(null);
+    }
+
+    // .snapshots() devuelve un Stream que emite automáticamente cada vez que el documento cambia
+    return firestore.collection('users').doc(user.uid).snapshots().map((snapshot) {
+      return snapshot.data();
+    });
+  }
+
+  @override
+  Future<void> updateUserProfile(Map<String, dynamic> data) {
     final user = auth.currentUser;
     if (user == null) throw Exception('Usuario no autenticado.');
 
-    final docSnapshot = await firestore.collection('users').doc(user.uid).get();
-
-    if (docSnapshot.exists) {
-      return docSnapshot.data();
-    }
-    return null;
+    // Usamos .update() para no sobrescribir el documento, solo cambiar campos
+    return firestore.collection('users').doc(user.uid).update(data);
   }
 }

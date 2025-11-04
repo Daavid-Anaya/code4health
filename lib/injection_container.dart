@@ -15,7 +15,12 @@ import 'features/authentication/domain/repositories/auth_repository.dart';
 import 'features/authentication/domain/usecases/calculate_caloric_consumption_use_case.dart';
 import 'features/authentication/domain/usecases/delete_account_use_case.dart';
 import 'features/authentication/domain/usecases/get_user_profile_use_case.dart';
+import 'features/authentication/domain/usecases/reauthenticate_use_case.dart';
 import 'features/authentication/domain/usecases/sign_in_use_case.dart';
+import 'features/authentication/domain/usecases/update_display_name_use_case.dart';
+import 'features/authentication/domain/usecases/update_email_use_case.dart';
+import 'features/authentication/domain/usecases/update_password_use_case.dart';
+import 'features/authentication/domain/usecases/update_user_profile_use_case.dart';
 
 // Creamos una instancia global de GetIt
 final sl = GetIt.instance;
@@ -35,6 +40,11 @@ Future<void> init() async {
   sl.registerFactory(() => SendPasswordResetEmailUseCase(repository: sl()));
   sl.registerFactory(() => GetUserProfileUseCase(repository: sl()));
 
+  sl.registerFactory(() => UpdateDisplayNameUseCase(repository: sl()));
+  sl.registerFactory(() => UpdateEmailUseCase(repository: sl()));
+  sl.registerFactory(() => UpdatePasswordUseCase(repository: sl()));
+  sl.registerFactory(() => ReauthenticateUseCase(repository: sl()));
+
 
   // Repositorio (Repository)
   // Se registra como 'lazySingleton' porque solo necesitamos una instancia en toda la app.
@@ -52,6 +62,7 @@ Future<void> init() async {
   sl.registerLazySingleton<UserProfileRepository>(() => UserProfileRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton<UserProfileRemoteDataSource>(() => UserProfileRemoteDataSourceImpl(firestore: sl(), auth: sl()));
   sl.registerFactory(() => CalculateCaloricConsumptionUseCase());
+  sl.registerFactory(() => UpdateUserProfileUseCase(repository: sl()));
 
   // --- EXTERNAL ---
   // Registramos la instancia de FirebaseAuth para que esté disponible en toda la app.

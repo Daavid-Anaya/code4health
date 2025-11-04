@@ -36,7 +36,7 @@ class BmiGaugeCard extends StatelessWidget {
     }
 
     // La lógica para normalizar el valor del IMC
-    final double normalizedBmi = (bmi.clamp(5, 40) - 5) / (40 - 5);
+    final double normalizedBmi = (bmi.clamp(5, 50) - 5) / (50 - 5);
     final double alignmentX = normalizedBmi * 2 - 1;
 
     return Container(
@@ -76,9 +76,9 @@ class BmiGaugeCard extends StatelessWidget {
                 height: 10,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [Colors.blue, Colors.green, Colors.orange, Colors.red],
-                    stops: [0.1, 0.4, 0.7, 1.0],
+                    stops: [0.1, 0.35, 0.65, 0.9],
                   ),
                 ),
               ),

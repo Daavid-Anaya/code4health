@@ -24,23 +24,37 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }
 
   @override
-  Future<UserProfileEntity?> getUserProfile() async {
-    final user = FirebaseAuth.instance.currentUser; // Necesitamos el nombre y UID
-    if (user == null) return null;
+  Stream<UserProfileEntity?> getUserProfileStream() {
+    // Escuchamos el stream de nuestro data source
+    return remoteDataSource.getUserProfileStream().asyncMap((data) {
+      // Esta lógica se ejecuta cada vez que el stream emite nuevos datos
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null || data == null) {
+        return null;
+      }
 
-    final data = await remoteDataSource.getUserProfile();
-    if (data != null) {
-      // Convertimos el mapa de Firestore a nuestra entidad de dominio
+      // Mapea los datos del stream a nuestra entidad
       return UserProfileEntity(
         uid: user.uid,
-        name: user.displayName ?? 'Sin nombre', // El nombre se puede guardar en Auth
+        name: user.displayName ?? 'Sin nombre', // El nombre se actualiza reactivamente desde Auth
         edad: data['edad'],
         peso: (data['peso'] as num).toDouble(),
         altura: (data['altura'] as num).toDouble(),
         sexo: data['sexo'],
         nivelActividad: data['nivelActividad'],
+
+        tratamientoHipertension: data['tratamientoHipertension'] ?? false,
+        fumador: data['fumador'] ?? false,
+        diabetico: data['diabetico'] ?? false,
+        presionSistolica: data['presionSistolica'],
+        hdl: data['hdl'],
+        colesterol: data['colesterol'],
       );
-    }
-    return null;
+    });
+  }
+
+  @override
+  Future<void> updateUserProfile(Map<String, dynamic> data) {
+    return remoteDataSource.updateUserProfile(data);
   }
 }

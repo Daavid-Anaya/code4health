@@ -13,7 +13,7 @@ AppBar buildSubPageAppBar({
     // Botón de Cancelar
     leading: TextButton(
       onPressed: () => Navigator.pop(context),
-      child: const Text(
+      child: Text(
         'Cancelar',
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
@@ -22,14 +22,14 @@ AppBar buildSubPageAppBar({
     // Título
     title: Text(
       title,
-      style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     centerTitle: true,
     // Botón de Guardar
     actions: [
       TextButton(
         onPressed: onSave,
-        child: const Text(
+        child: Text(
           'Guardar',
           style: TextStyle(
             color: AppColors.primary, // Usando el color de tu app
