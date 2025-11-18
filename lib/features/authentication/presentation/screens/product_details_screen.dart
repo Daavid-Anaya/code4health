@@ -1,25 +1,26 @@
 import 'package:code4health/core/constants/app_colors.dart';
+import 'package:code4health/features/authentication/presentation/widgets/build_product_header.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/text_styles.dart';
+import '../../domain/entities/product_entity.dart';
+import '../widgets/build_info_card.dart';
+import '../widgets/build_ingredients.dart';
+import '../widgets/build_nutrition_table.dart';
+import '../widgets/build_preferences_section.dart';
 
-class ProductDetailsScreen extends StatefulWidget {
-  const ProductDetailsScreen({super.key});
+class ProductDetailsScreen extends StatelessWidget {
+  final ProductEntity product;
+  const ProductDetailsScreen({super.key, required this.product});
 
-  @override
-  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
-}
-
-class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
-
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Detalles del Producto', style: TextStyles.title),
+        title: Text(product.productName ?? 'Detalles', style: TextStyles.title(context)),
         backgroundColor: AppColors.bar,
         elevation: 0,
       ),
@@ -29,104 +30,36 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Cabecera del producto (imagen y nombre)
-              _buildProductHeader(screenWidth),
-              SizedBox(height: screenHeight * 0.02),
-              const Divider(color: AppColors.backgroundLineasMarcos),
+              // Cabecera del producto (imagen, nombre, marca, cantidad)
+              BuildProductHeader(screenWidth: screenWidth, product: product),
               SizedBox(height: screenHeight * 0.02),
 
-              // Información
-              _buildDietaryInfo(screenWidth, screenHeight),
+              // Sección de relación con preferencias
+              BuildPreferencesSection(screenWidth: screenWidth, screenHeight: screenHeight, product: product),
               SizedBox(height: screenHeight * 0.02),
-              const Divider(color: AppColors.backgroundLineasMarcos),
+
+              // Información Nutricional
+              BuildInfoCard(
+                context,
+                title: 'Información nutricional',
+                content: BuildNutritionTable(product: product),
+              ),
+              SizedBox(height: screenHeight * 0.02),
+
+              // Ingredientes
+              BuildInfoCard(
+                context,
+                title: 'Ingredientes',
+                content: BuildIngredients(product: product),
+              ),
               SizedBox(height: screenHeight * 0.02),
 
               // Productos similares
-              _buildSimilarProducts(screenWidth, screenHeight),
+              //_buildSimilarProducts(screenWidth, screenHeight),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildProductHeader(double screenWidth) {
-
-    final double imageSize = screenWidth * 0.28;
-
-    return Row(
-      children: [
-        // Placeholder para la imagen
-        Container(
-          width: imageSize,
-          height: imageSize,
-          decoration: BoxDecoration(
-            color: AppColors.backgroundComponentSelect,
-            borderRadius: BorderRadius.circular(16),
-          ),
-        ),
-        SizedBox(width: screenWidth * 0.04),
-        // Columna para el texto
-        const Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Yogurt', style: TextStyles.encabezado),
-              SizedBox(height: 8),
-              Text('Descripción del producto...', style: TextStyles.parrafo),
-              SizedBox(height: 4),
-              Text('Más detalles aquí...', style: TextStyles.parrafo),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildDietaryInfo(double screenWidth, double screenHeight) {
-    return Column(
-      children: [
-
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.02, vertical: screenHeight * 0.015),
-          decoration: BoxDecoration(
-            color: AppColors.backgroundComponent,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Row(
-            children: [
-              const Icon(Icons.check_circle, color: Colors.green),
-              SizedBox(width: screenWidth * 0.005),
-              const Text('Se ajusta a sus necesidades dietéticas', style: TextStyles.parrafo),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.02),
-        const Divider(color: AppColors.backgroundLineasMarcos),
-        SizedBox(height: screenHeight * 0.02),
-        // El resto de los items
-        _buildChecklistItem('Bajo en azúcares', true),
-        SizedBox(height: screenHeight * 0.015),
-        _buildChecklistItem('Contiene fibra', true),
-        SizedBox(height: screenHeight * 0.015),
-        _buildChecklistItem('Alto en sodio', false),
-      ],
-    );
-  }
-
-  // Widget de ayuda para cada item de la lista de pros/contras
-  Widget _buildChecklistItem(String text, bool isPositive) {
-    return Row(
-      children: [
-        Icon(
-          isPositive ? Icons.check_circle_outline : Icons.cancel_outlined,
-          color: isPositive ? Colors.green : Colors.red,
-        ),
-        const SizedBox(width: 12),
-        Expanded(
-          child: Text(text, style: TextStyles.parrafo),
-        ),
-      ],
     );
   }
 
@@ -137,16 +70,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Productos similares',
-          style: TextStyles.subEncabezado,
-        ),
+        //Text(
+          //'Productos similares',
+          //style: TextStyles.subEncabezado(context),
+        //),
         SizedBox(height: screenHeight * 0.02),
         SizedBox(
           height: itemSize,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3, // Número de productos similares
+            itemCount: 3,
             itemBuilder: (context, index) {
               return Container(
                 width: itemSize,

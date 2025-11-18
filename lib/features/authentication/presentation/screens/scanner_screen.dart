@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
+import '../../../../injection_container.dart';
+import '../../domain/entities/product_entity.dart';
+import '../../domain/usecases/get_product_by_barcode_use_case.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
@@ -13,16 +16,60 @@ class ScannerScreen extends StatefulWidget {
 
 class _ScannerScreenState extends State<ScannerScreen> {
   final MobileScannerController controller = MobileScannerController();
+  final GetProductByBarcodeUseCase _getProductUseCase = sl<GetProductByBarcodeUseCase>();
 
-  bool _isScanCompleted = false;
+  // Variable para que represente el estado de carga/procesamiento
+  bool _isProcessing = false;
 
   // Variable para manejar manualmente el estado del flash
   bool isTorchOn = false;
 
-  void _resetScan() {
+  Future<void> _handleBarcodeDetect(BarcodeCapture capture) async {
+    // Si ya estamos procesando un código, no hagas nada
+    if (_isProcessing) return;
+
+    // Obtenemos el código de barras
+    final String code = capture.barcodes.first.rawValue ?? 'N/A';
+    if (code == 'N/A') return; // Ignora si no hay código
+
+    // Inicia el estado de carga
     setState(() {
-      _isScanCompleted = false;
+      _isProcessing = true;
     });
+
+    try {
+      // Llama al Caso de Uso para obtener el producto desde la API
+      final ProductEntity product = await _getProductUseCase.call(code);
+
+      // Si tiene éxito, navega a la pantalla de detalles con el producto
+      if (mounted) {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            // Pasa el objeto 'product' a la pantalla de detalles
+            builder: (context) => ProductDetailsScreen(product: product),
+          ),
+        );
+      }
+    } catch (e) {
+      // Si falla, muestra un error
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error: ${e.toString()}'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      // Permite un nuevo escaneo después de un breve retraso
+      // para evitar escaneos múltiples accidentales.
+      await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {
+        setState(() {
+          _isProcessing = false;
+        });
+      }
+    }
   }
 
   @override
@@ -42,7 +89,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
       appBar: AppBar(
         backgroundColor: AppColors.bar,
         elevation: 0,
-        title: const Text('Escanear Producto', style: TextStyles.title,),
+        title: Text('Escanear Producto', style: TextStyles.title(context),),
         actions: [
 
           IconButton(
@@ -53,7 +100,6 @@ class _ScannerScreenState extends State<ScannerScreen> {
               color: isTorchOn ? Colors.purple : Colors.white,
             ),
             onPressed: () {
-              //método para cambiar el flash
               controller.toggleTorch();
 
               setState(() {
@@ -68,33 +114,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
         children: [
           MobileScanner(
             controller: controller,
-            onDetect: (capture) {
-              if (!_isScanCompleted) {
-                setState(() { _isScanCompleted = true; });
-                final String code = capture.barcodes.first.rawValue ?? 'N/A';
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    title: const Text('Resultado del Escaneo'),
-                    content: Text(code),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop(); // Cierra el diálogo
-                          _resetScan(); // Permite un nuevo escaneo
-
-                          Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => const ProductDetailsScreen()),
-                          );
-                        },
-                        child: const Text('VER DETALLES'),
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
+            onDetect: _handleBarcodeDetect,
           ),
           Container(
             width: scanArea,
@@ -104,6 +124,25 @@ class _ScannerScreenState extends State<ScannerScreen> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
+
+          if (_isProcessing)
+            Container(
+              color: Colors.black.withOpacity(0.5),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    SizedBox(height: 16),
+                    Text(
+                      'Buscando producto...',
+                      style: TextStyles.parrafo(context),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
         ],
       ),
     );
