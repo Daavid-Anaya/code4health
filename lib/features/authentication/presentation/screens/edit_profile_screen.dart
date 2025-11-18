@@ -26,13 +26,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         title: const Text('Editar perfil', style: TextStyle(color: Colors.white)),
         backgroundColor: AppColors.bar,
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.white), // Asegura que la flecha de regreso sea blanca
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center, // Centrar elementos
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Avatar y botón de editar foto
               SizedBox(height: screenHeight * 0.02),

@@ -29,8 +29,7 @@ class DeleteAccountUseCase {
         rethrow;
       }
     } catch (e) {
-      // Capturamos cualquier otro error (ej: de la base de datos) y lo relanzamos
-      
+      // Capturamos cualquier otro error y lo relanzamos
       rethrow;
     }
   }

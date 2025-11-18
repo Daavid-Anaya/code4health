@@ -1,13 +1,10 @@
 import 'dart:math';
-
 import 'package:code4health/core/constants/app_colors.dart';
 import 'package:code4health/features/authentication/presentation/screens/reset_password_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:code4health/injection_container.dart';
 import '../../domain/usecases/sign_in_use_case.dart';
-
 import '../../../../core/constants/text_styles.dart';
 import '../widgets/auth_navigation_link.dart';
 import '../widgets/custom_text_field.dart';
@@ -99,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: screenHeight * 0.04),
 
                   // Titulo
-                  TextWidgets(title: "Iniciar Sesión", stylee: TextStyles.encabezado,),
+                  TextWidgets(title: "Iniciar Sesión", stylee: TextStyles.encabezado(context),),
                   SizedBox(height: screenHeight * 0.04),
 
                   // Campo de texto para el Email
@@ -136,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             MaterialPageRoute(builder: (context) => const ResetPasswordScreen()),
                           );
                         },
-                        child: Text('¿Olvidaste tu contraseña?', style: TextStyles.leyenda),
+                        child: Text('¿Olvidaste tu contraseña?', style: TextStyles.leyenda(context)),
                       ),
                     ),
                   ),

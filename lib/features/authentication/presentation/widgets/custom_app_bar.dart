@@ -1,6 +1,6 @@
+import 'package:code4health/core/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
-
 
 AppBar buildSubPageAppBar({
   required BuildContext context,
@@ -15,14 +15,14 @@ AppBar buildSubPageAppBar({
       onPressed: () => Navigator.pop(context),
       child: Text(
         'Cancelar',
-        style: TextStyle(color: Colors.white, fontSize: 16),
+        style: TextStyles.parrafo(context).copyWith(color: Colors.white),
       ),
     ),
     leadingWidth: 100, // Ajusta el espacio para "Cancelar"
     // Título
     title: Text(
       title,
-      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+      style: TextStyles.subEncabezado(context).copyWith(color: Colors.white, fontWeight: FontWeight.bold),
     ),
     centerTitle: true,
     // Botón de Guardar
@@ -31,10 +31,9 @@ AppBar buildSubPageAppBar({
         onPressed: onSave,
         child: Text(
           'Guardar',
-          style: TextStyle(
-            color: AppColors.primary, // Usando el color de tu app
+          style: TextStyles.parrafo(context).copyWith(
+            color: AppColors.primary,
             fontWeight: FontWeight.bold,
-            fontSize: 16,
           ),
         ),
       ),

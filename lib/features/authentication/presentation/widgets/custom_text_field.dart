@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 
@@ -9,7 +8,6 @@ class CustomTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final TextEditingController? controller;
   final bool readOnly;
-
 
   const CustomTextField({
     super.key,
@@ -27,10 +25,10 @@ class CustomTextField extends StatelessWidget {
       obscureText: isPassword,
       keyboardType: keyboardType,
       readOnly: readOnly,
-      style: TextStyles.parrafo,
+      style: TextStyles.parrafo(context),
       decoration: InputDecoration(
         labelText: labelText,
-        labelStyle: TextStyles.etiqueta,
+        labelStyle: TextStyles.etiqueta(context),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AppColors.backgroundComponentSelect),
         ),

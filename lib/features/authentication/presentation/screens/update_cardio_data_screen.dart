@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../../../injection_container.dart';
 import '../../domain/entities/user_profile_entity.dart';
@@ -80,7 +79,6 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
   Future<void> _saveCardioData() async {
     setState(() { _isSaving = true; });
 
-    // Prepara el mapa solo con los datos de esta pantalla
     // Usamos int.tryParse para convertir los strings a números de forma segura
     final Map<String, dynamic> dataToUpdate = {
       'tratamientoHipertension': _tratamientoHipertension,
@@ -124,22 +122,23 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
       backgroundColor: AppColors.background,
       appBar: buildSubPageAppBar(
         context: context,
-        title: 'Datos Cardiovasculares',
+        title: 'Cardiovasculares',
         onSave: _saveCardioData,
       ),
       body: _isScreenLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(screenHeight * 0.02),
           child: Column(
             children: [
+              SizedBox(height: screenHeight * 0.04),
               TitledSwitch(
                 label: 'Tratamiento de hipertensión',
                 value: _tratamientoHipertension,
                 onChanged: (val) => setState(() => _tratamientoHipertension = val),
               ),
-              SizedBox(height: screenHeight * 0.02),
+              SizedBox(height: screenHeight * 0.04),
               Row(
                 children: [
                   Expanded(
@@ -149,7 +148,7 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
                       onChanged: (val) => setState(() => _fumador = val),
                     ),
                   ),
-                  SizedBox(width: screenHeight * 0.04),
+                  SizedBox(width: screenHeight * 0.02),
                   Expanded(
                     child: TitledSwitch(
                       label: 'Diabético',
@@ -159,20 +158,20 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
                   ),
                 ],
               ),
-              SizedBox(height: screenHeight * 0.03),
+              SizedBox(height: screenHeight * 0.04),
 
               CustomTextField(
                 labelText: 'Presión sanguínea sistólica (mmHg)',
                 controller: _presionController,
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: screenHeight * 0.04),
               CustomTextField(
                 labelText: 'HDL (lipoproteína de alta densidad)',
                 controller: _hdlController,
                 keyboardType: TextInputType.number,
               ),
-              const SizedBox(height: 12),
+              SizedBox(height: screenHeight * 0.04),
               CustomTextField(
                 labelText: 'Colesterol',
                 controller: _colesterolController,
@@ -181,7 +180,7 @@ class _UpdateCardioDataScreenState extends State<UpdateCardioDataScreen> {
 
               // Muestra un indicador si se está guardando
               if (_isSaving)
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 24.0),
                   child: CircularProgressIndicator(),
                 ),

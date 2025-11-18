@@ -1,6 +1,6 @@
 class UserProfileEntity {
   final String uid;
-  final String? name; // El nombre puede venir de FirebaseAuth
+  final String? name;
   final int edad;
   final double peso;
   final double altura;

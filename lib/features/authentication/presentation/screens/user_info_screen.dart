@@ -118,10 +118,10 @@ class _UserInfoScreenState extends State<UserInfoScreen > {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 // Texto de instrucciones
-                const Text(
+                Text(
                   'Registra los datos que se piden para conocer su estado de nutrición',
                   textAlign: TextAlign.center,
-                  style: TextStyles.parrafo,
+                  style: TextStyles.parrafo(context),
                 ),
                 SizedBox(height: screenHeight * 0.035),
 

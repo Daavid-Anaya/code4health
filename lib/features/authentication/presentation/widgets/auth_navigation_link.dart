@@ -20,13 +20,13 @@ class AuthNavigationLink extends StatelessWidget {
       children: <Widget>[
         Text(
           promptText,
-          style: TextStyles.leyenda,
+          style: TextStyles.leyenda(context),
         ),
         TextButton(
           onPressed: onPressed,
           child: Text(
             linkText,
-            style: TextStyles.linkLeyenda,
+            style: TextStyles.linkLeyenda(context),
           ),
         ),
       ],

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:code4health/core/constants/app_colors.dart';
-
 import '../../../../core/constants/text_styles.dart';
 
 class PrimaryActionButton extends StatelessWidget {
@@ -26,7 +25,7 @@ class PrimaryActionButton extends StatelessWidget {
       ),
       child: Text(
         text,
-        style: TextStyles.parrafo,
+        style: TextStyles.parrafo(context),
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 
@@ -21,13 +20,13 @@ class ProfileOptionTile extends StatelessWidget {
         padding:  EdgeInsets.symmetric(vertical: 18.0, horizontal: 16.0),
         margin:  EdgeInsets.only(bottom: 12.0),
         decoration: BoxDecoration(
-          color: AppColors.backgroundContainer, // Usando el color de tus imágenes
+          color: AppColors.backgroundContainer,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(title, style: TextStyles.parrafo.copyWith(color: Colors.white)),
+            Text(title, style: TextStyles.parrafo(context).copyWith(color: Colors.white)),
             Icon(Icons.chevron_right, color: Colors.white70),
           ],
         ),

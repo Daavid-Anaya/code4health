@@ -30,8 +30,8 @@ class GenderSelector extends StatelessWidget {
           child: Column(
             children: [
               Icon(icon, color: Colors.white, size: 30),
-              const SizedBox(height: 8),
-              Text(gender, style: TextStyles.subEncabezado),
+              SizedBox(height: 8),
+              Text(gender, style: TextStyles.subEncabezado(context)),
             ],
           ),
         ),

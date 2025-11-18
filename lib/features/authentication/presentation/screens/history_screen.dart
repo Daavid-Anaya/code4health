@@ -1,9 +1,8 @@
-import 'package:code4health/features/authentication/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 
-// Un pequeño modelo de datos para representar un item del historial
+// Modelo de datos para representar un item del historial
 class HistoryItem {
   final String name;
   final IconData icon;
@@ -39,7 +38,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Historial', style: TextStyles.title),
+        title: Text('Historial', style: TextStyles.title(context)),
         backgroundColor: AppColors.bar,
         elevation: 0,
       ),
@@ -65,9 +64,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
                 return GestureDetector(
                   onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const ProductDetailsScreen()),
-                    );
+                    //Navigator.of(context).push(
+                      //MaterialPageRoute(builder: (context) => const ProductDetailsScreen()),
+                    //);
                   },
                   // Construimos cada tarjeta del historial
                   child: Container(

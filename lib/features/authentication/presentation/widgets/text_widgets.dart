@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class TextWidgets extends StatelessWidget {
   final String title;
   final TextStyle stylee;

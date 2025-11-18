@@ -75,7 +75,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
         Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
-      // Maneja errores de ambos pasos
+      // Manejo de errores
       String message = 'Ocurrió un error.';
       if (e.code == 'invalid-credential' || e.code == 'wrong-password') {
         message = 'La contraseña actual es incorrecta.';

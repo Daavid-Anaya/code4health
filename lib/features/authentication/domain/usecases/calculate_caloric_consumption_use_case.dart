@@ -14,7 +14,7 @@ class CalculateCaloricConsumptionUseCase {
     double tmb;
     if (sexo.toLowerCase() == 'masculino') {
       tmb = (10 * peso) + (6.25 * altura) - (5 * edad) + 5;
-    } else { // Asumimos 'femenino'
+    } else {
       tmb = (10 * peso) + (6.25 * altura) - (5 * edad) - 161;
     }
 

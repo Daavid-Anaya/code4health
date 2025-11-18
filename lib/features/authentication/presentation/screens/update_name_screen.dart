@@ -53,7 +53,7 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Nombre actualizado con éxito.'), backgroundColor: Colors.green),
         );
-        Navigator.of(context).pop(); // Regresa a la pantalla anterior
+        Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
@@ -81,7 +81,7 @@ class _UpdateNameScreenState extends State<UpdateNameScreen> {
         padding: const EdgeInsets.all(16.0),
         child: CustomTextField(
           labelText: 'Nombre',
-          controller: _nameController, // Asignar el controlador
+          controller: _nameController,
         ),
       ),
     );

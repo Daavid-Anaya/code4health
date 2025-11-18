@@ -42,7 +42,7 @@ class ProfileScreen extends StatelessWidget {
               // Editar Perfil
               ListTile(
                 leading: const Icon(Icons.edit, color: Colors.white),
-                title: const Text('Editar Perfil', style: TextStyles.parrafo),
+                title: Text('Editar Perfil', style: TextStyles.parrafo(context)),
                 onTap: () {
                   Navigator.pop(bottomSheetContext);
                   Navigator.of(context).push(
@@ -151,7 +151,7 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Perfil', style: TextStyles.title),
+        title: Text('Perfil', style: TextStyles.title(context)),
         backgroundColor: AppColors.bar,
         elevation: 0,
         actions: [
@@ -207,7 +207,7 @@ class ProfileScreen extends StatelessWidget {
                   SizedBox(height: screenHeight * 0.02),
                   Text(
                     userProfile.name ?? 'Usuario',
-                    style: TextStyles.subEncabezado,
+                    style: TextStyles.subEncabezado(context),
                   ),
                   SizedBox(height: screenHeight * 0.03),
                   Container(
@@ -240,11 +240,11 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        const Text('Consumo calórico', style: TextStyles.parrafo),
-                        const SizedBox(height: 4),
+                        Text('Consumo calórico', style: TextStyles.parrafo(context)),
+                        SizedBox(height: 4),
                         Text(
                             '${caloricConsumption.toStringAsFixed(2)} kcal. por día',
-                            style: TextStyles.subEncabezado
+                            style: TextStyles.subEncabezado(context)
                         ),
                       ],
                     ),

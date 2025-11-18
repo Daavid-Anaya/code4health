@@ -66,7 +66,7 @@ class _UpdateBasicDataScreenState extends State<UpdateBasicDataScreen> {
     }
   }
 
-  // Lógica para guardae los datos
+  // Lógica para guardar los datos
   Future<void> _saveBasicData() async {
     // Validación
     if (_selectedGender == null || _selectedNivelActividad == null) {
@@ -78,7 +78,6 @@ class _UpdateBasicDataScreenState extends State<UpdateBasicDataScreen> {
 
     setState(() { _isSaving = true; });
 
-    // Crea el mapa solo con los datos que esta pantalla actualiza
     final Map<String, dynamic> dataToUpdate = {
       'sexo': _selectedGender,
       'altura': _altura,
@@ -118,7 +117,7 @@ class _UpdateBasicDataScreenState extends State<UpdateBasicDataScreen> {
       backgroundColor: AppColors.background,
       appBar: buildSubPageAppBar(
         context: context,
-        title: 'Datos básicos',
+        title: 'Básicos',
         onSave: _saveBasicData,
       ),
       body: _isScreenLoading
@@ -163,7 +162,7 @@ class _UpdateBasicDataScreenState extends State<UpdateBasicDataScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Altura: ${_altura.toInt()} cm', style: TextStyles.parrafo),
+                    Text('Altura: ${_altura.toInt()} cm', style: TextStyles.parrafo(context)),
                     Slider(
                       value: _altura,
                       min: 0,
@@ -210,11 +209,11 @@ class _UpdateBasicDataScreenState extends State<UpdateBasicDataScreen> {
 
               InfoCard(
                 child: DropdownButtonFormField<String>(
-                  value: _selectedNivelActividad,
-                  hint: Text('Selecciona tu nivel de actividad', style: TextStyle(color: Colors.grey[400])),
-                  style: const TextStyle(color: Colors.white),
+                  initialValue: _selectedNivelActividad,
+                  hint: Text('Selecciona tu nivel de actividad', style: TextStyles.parrafo(context).copyWith(color: Colors.white70)),
+                  style: TextStyle(color: Colors.white),
                   dropdownColor: Colors.grey[800],
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Nivel de actividad',
                     labelStyle: TextStyle(color: Colors.white70),
                     border: InputBorder.none,

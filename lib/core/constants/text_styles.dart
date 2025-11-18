@@ -1,43 +1,79 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+import 'dart:math';
 
 class TextStyles {
-  static const TextStyle title = TextStyle(
-    color: AppColors.body,
-    fontWeight: FontWeight.bold,
-    fontSize: 26.0,
-  );
+  static double _getResponsiveFontSize(BuildContext context, double baseSize) {
 
-  static const TextStyle encabezado = TextStyle(
-    color: AppColors.body,
-    fontWeight: FontWeight.bold,
-    fontSize: 24.0,
-  );
+    // Obtiene el tamaño actual de la pantalla
+    final size = MediaQuery.of(context).size;
 
-  static const TextStyle subEncabezado = TextStyle(
-    color: AppColors.body,
-    fontWeight: FontWeight.bold,
-    fontSize: 20.0,
-  );
+    // Calcula la diagonal
+    final currentDiagonal = sqrt(pow(size.width, 2) + pow(size.height, 2));
 
-  static const TextStyle parrafo = TextStyle(
-    color: AppColors.body,
-    fontSize: 16.0,
-  );
+    const double baseDiagonal = 900.0;
 
-  static const TextStyle etiqueta = TextStyle(
-    color: AppColors.body,
-    fontSize: 14.0,
-  );
+    // Calcula el factor de escalado
+    final scalingFactor = currentDiagonal / baseDiagonal;
 
-  static const TextStyle leyenda = TextStyle(
-    color: AppColors.body,
-    fontSize: 12.0,
-  );
+    // Aplica el escalado al tamaño base
+    // Usamos .clamp() para evitar tamaños de fuente  grandes o pequeños
+    // Aquí, no será más pequeño que el 80% ni más grande que el 180%.
+    final responsiveSize = baseSize * scalingFactor.clamp(0.8, 1.8);
 
-  static const TextStyle linkLeyenda = TextStyle(
-    color: Colors.blue,
-    fontSize: 12,
-    fontWeight: FontWeight.bold,
-  );
+    return responsiveSize;
+  }
+
+  static TextStyle title(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontWeight: FontWeight.bold,
+      fontSize: _getResponsiveFontSize(context, 26.0),
+    );
+  }
+
+  static TextStyle encabezado(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontWeight: FontWeight.bold,
+      fontSize: _getResponsiveFontSize(context, 24.0),
+    );
+  }
+
+  static TextStyle subEncabezado(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontWeight: FontWeight.bold,
+      fontSize: _getResponsiveFontSize(context, 20.0),
+    );
+  }
+
+  static TextStyle parrafo(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontSize: _getResponsiveFontSize(context, 15.0),
+    );
+  }
+
+  static TextStyle etiqueta(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontSize: _getResponsiveFontSize(context, 14.0),
+    );
+  }
+
+  static TextStyle leyenda(BuildContext context) {
+    return TextStyle(
+      color: AppColors.body,
+      fontSize: _getResponsiveFontSize(context, 12.0),
+    );
+  }
+
+  static TextStyle linkLeyenda(BuildContext context) {
+    return TextStyle(
+      color: Colors.blue,
+      fontSize: _getResponsiveFontSize(context, 12.0),
+      fontWeight: FontWeight.bold,
+    );
+  }
 }

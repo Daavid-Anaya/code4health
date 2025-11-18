@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart'; // Usamos User por conveniencia, idealmente sería una entidad propia
+import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class AuthRepository {
   // Stream para escuchar los cambios de estado de autenticación

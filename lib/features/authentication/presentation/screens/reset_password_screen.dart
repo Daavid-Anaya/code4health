@@ -43,7 +43,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Se ha enviado un enlace a tu correo.'), backgroundColor: Colors.green),
         );
-        Navigator.of(context).pop(); // Regresa a la pantalla de login
+        Navigator.of(context).pop();
       }
     } on FirebaseAuthException catch (e) {
       String message = "Ocurrió un error.";
@@ -78,17 +78,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const Text(
+              Text(
                 'Restablecer Contraseña',
                 textAlign: TextAlign.center,
-                style: TextStyles.encabezado,
+                style: TextStyles.encabezado(context),
               ),
               SizedBox(height: screenHeight * 0.05),
         
-              const Text(
+              Text(
                 'Ingresa el correo electrónico asociado a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.',
                 textAlign: TextAlign.center,
-                style: TextStyles.etiqueta,
+                style: TextStyles.etiqueta(context),
               ),
               SizedBox(height: screenHeight * 0.05),
         

@@ -48,7 +48,7 @@ class BmiGaugeCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text('Tu IMC es', style: TextStyles.parrafo),
+          Text('Tu IMC es', style: TextStyles.parrafo(context)),
           Text(
             bmi.toStringAsFixed(2),
             style: TextStyle(
@@ -57,16 +57,16 @@ class BmiGaugeCard extends StatelessWidget {
                 fontWeight: FontWeight.bold
               ),
           ),
-          const SizedBox(height: 8),
-          const Text('Tu estado de nutrición es', style: TextStyles.etiqueta),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
+          Text('Tu estado de nutrición es', style: TextStyles.etiqueta(context)),
+          SizedBox(height: 8),
           Text(
             status,
             style: TextStyle(
                 color: statusColor, fontSize: 18, fontWeight: FontWeight.bold
               ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: 8),
 
           // Medidor de IMC
           Stack(
@@ -88,7 +88,7 @@ class BmiGaugeCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Row(
@@ -101,10 +101,10 @@ class BmiGaugeCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text(
             message,
-            style: const TextStyle(color: AppColors.body),
+            style: TextStyle(color: AppColors.body),
             textAlign: TextAlign.center
           ),
         ],

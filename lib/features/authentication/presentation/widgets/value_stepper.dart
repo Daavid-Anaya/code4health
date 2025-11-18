@@ -25,7 +25,7 @@ class ValueStepper extends StatelessWidget {
       child: Column(
         children: [
           Text(label, style: const TextStyle(color: AppColors.body)),
-          Text('$value', style: TextStyles.encabezado),
+          Text('$value', style: TextStyles.encabezado(context)),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

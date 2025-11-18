@@ -23,9 +23,9 @@ class StatCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Text(label, style: TextStyles.etiqueta),
-          const SizedBox(height: 4),
-          Text(value, style: TextStyles.subEncabezado),
+          Text(label, style: TextStyles.etiqueta(context)),
+          SizedBox(height: 4),
+          Text(value, style: TextStyles.subEncabezado(context)),
         ],
       ),
     );

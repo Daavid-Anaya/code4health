@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 
@@ -13,7 +12,7 @@ class OrDivider extends StatelessWidget {
         Expanded(child: Divider(color: AppColors.backgroundLineasMarcos)),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
-          child: Text('O', style: TextStyles.parrafo),
+          child: Text('O', style: TextStyles.parrafo(context)),
         ),
         Expanded(child: Divider(color: AppColors.backgroundLineasMarcos)),
       ],

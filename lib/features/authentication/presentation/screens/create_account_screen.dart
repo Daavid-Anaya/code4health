@@ -114,7 +114,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   SizedBox(height: screenHeight * 0.04),
 
                   // Titulo
-                  TextWidgets(title: "Crear Cuenta", stylee: TextStyles.encabezado,),
+                  TextWidgets(title: "Crear Cuenta", stylee: TextStyles.encabezado(context),),
                   SizedBox(height: screenHeight * 0.04),
 
                   // Campo de texto para el Email
