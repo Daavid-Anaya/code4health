@@ -1,4 +1,4 @@
-import 'package:code4health/features/authentication/domain/repositories/user_profile_repository.dart';
+import 'package:code4health/features/profile/domain/repositories/user_profile_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../repositories/auth_repository.dart';
 import '../error/exceptions.dart';

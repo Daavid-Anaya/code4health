@@ -1,8 +1,8 @@
-import 'package:code4health/features/authentication/presentation/screens/update_basic_data_screen.dart';
-import 'package:code4health/features/authentication/presentation/screens/update_cardio_data_screen.dart';
-import 'package:code4health/features/authentication/presentation/screens/update_email_screen.dart';
-import 'package:code4health/features/authentication/presentation/screens/update_name_screen.dart';
-import 'package:code4health/features/authentication/presentation/screens/update_password_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/update_basic_data_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/update_cardio_data_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/update_email_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/update_name_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/update_password_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../widgets/profile_option_tile.dart';

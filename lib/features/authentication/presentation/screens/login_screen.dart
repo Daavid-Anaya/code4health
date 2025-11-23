@@ -7,9 +7,8 @@ import 'package:code4health/injection_container.dart';
 import '../../domain/usecases/sign_in_use_case.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../widgets/auth_navigation_link.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../profile/presentation/widgets/custom_text_field.dart';
 import '../widgets/img_widgets.dart';
-import '../widgets/or_divider.dart';
 import '../widgets/primary_action_button.dart';
 import '../widgets/text_widgets.dart';
 import 'create_account_screen.dart';
@@ -149,30 +148,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   SizedBox(height: screenHeight * 0.03),
 
                   // Divisor con "O"
-                  const OrDivider(),
+                  //const OrDivider(),
                   SizedBox(height: screenHeight * 0.03),
 
                   // Botones de inicio de sesión social
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // Usamos CircleAvatar para crear los círculos
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundColor: AppColors.grey700,
-                        // child: Icon(Icons.google, color: Colors.white), // Ejemplo con un icono
-                      ),
-                      SizedBox(width: screenWidth * 0.06),
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundColor: AppColors.grey700,
-                      ),
-                      SizedBox(width: screenWidth * 0.06),
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundColor: AppColors.grey700,
-                      ),
-                    ],
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    // children: <Widget>[
+                    //   // Usamos CircleAvatar para crear los círculos
+                    //   CircleAvatar(
+                    //     radius: 25,
+                    //     backgroundColor: AppColors.grey700,
+                    //     // child: Icon(Icons.google, color: Colors.white), // Ejemplo con un icono
+                    //   ),
+                    //   SizedBox(width: screenWidth * 0.06),
+                    //   CircleAvatar(
+                    //     radius: 25,
+                    //     backgroundColor: AppColors.grey700,
+                    //   ),
+                    //   SizedBox(width: screenWidth * 0.06),
+                    //   CircleAvatar(
+                    //     radius: 25,
+                    //     backgroundColor: AppColors.grey700,
+                    //   ),
+                    // ],
                   ),
                   SizedBox(height: screenWidth * 0.05),
 

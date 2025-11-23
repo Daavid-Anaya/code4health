@@ -20,7 +20,7 @@ class BuildIngredients extends StatelessWidget {
           style: TextStyles.parrafo(context).copyWith(color: Colors.grey[400]),
         ),
         if (product.allergens.isNotEmpty) ...[
-          const SizedBox(height: 16),
+          SizedBox(height: 16),
           Text('Alérgenos: ${product.allergens.map((e) => e.split(':').last.replaceAll('-', ' ')).join(', ')}',
               style: TextStyles.parrafo(context).copyWith(fontWeight: FontWeight.bold, color: Colors.orange)),
         ]

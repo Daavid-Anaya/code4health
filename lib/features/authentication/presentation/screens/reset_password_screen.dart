@@ -1,6 +1,6 @@
 import 'package:code4health/core/constants/app_colors.dart';
 import 'package:code4health/core/constants/text_styles.dart';
-import 'package:code4health/features/authentication/presentation/widgets/custom_text_field.dart';
+import 'package:code4health/features/profile/presentation/widgets/custom_text_field.dart';
 import 'package:code4health/features/authentication/presentation/widgets/primary_action_button.dart';
 import 'package:code4health/injection_container.dart';
 import 'package:firebase_auth/firebase_auth.dart';

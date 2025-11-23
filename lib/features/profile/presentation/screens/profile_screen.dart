@@ -4,7 +4,7 @@ import 'package:code4health/features/authentication/domain/usecases/delete_accou
 import 'package:code4health/features/authentication/domain/usecases/sign_out_use_case.dart';
 import 'package:code4health/injection_container.dart';
 import 'package:flutter/material.dart';
-import 'package:code4health/features/authentication/presentation/screens/edit_profile_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/edit_profile_screen.dart';
 import '../../../../auth_gate.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../domain/entities/user_profile_entity.dart';

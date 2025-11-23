@@ -1,8 +1,8 @@
-import 'package:code4health/features/authentication/presentation/screens/profile_screen.dart';
-import 'package:code4health/features/authentication/presentation/screens/scanner_screen.dart';
+import 'package:code4health/features/profile/presentation/screens/profile_screen.dart';
+import 'package:code4health/features/scanner/presentation/screens/scanner_screen.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
-import 'history_screen.dart';
+import '../../../history/presentation/screens/history_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

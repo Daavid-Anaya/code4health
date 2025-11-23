@@ -1,4 +1,4 @@
-import '../entities/product_entity.dart';
+import '../../../products/domain/entities/product_entity.dart';
 
 abstract class ProductRepository {
   // Metodo para obtener el producto por su código de barras

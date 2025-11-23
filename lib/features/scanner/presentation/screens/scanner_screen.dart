@@ -1,11 +1,11 @@
-import 'package:code4health/features/authentication/presentation/screens/product_details_screen.dart';
+import 'package:code4health/features/products/presentation/screens/product_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../../../injection_container.dart';
-import '../../domain/entities/product_entity.dart';
-import '../../domain/usecases/get_product_by_barcode_use_case.dart';
+import '../../../products/domain/entities/product_entity.dart';
+import '../../../products/domain/usecases/get_product_by_barcode_use_case.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});

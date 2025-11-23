@@ -1,13 +1,13 @@
-import 'package:code4health/features/authentication/domain/usecases/save_user_profile_use_case.dart';
 import 'package:code4health/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
+import '../../../profile/domain/usecases/save_user_profile_use_case.dart';
 import '../widgets/custom_dropdown_form_field.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../profile/presentation/widgets/custom_text_field.dart';
 import '../widgets/primary_action_button.dart';
-import 'main_screen.dart';
+import '../../../scanner/presentation/screens/main_screen.dart';
 
 class UserInfoScreen extends StatefulWidget {
   const UserInfoScreen ({super.key});

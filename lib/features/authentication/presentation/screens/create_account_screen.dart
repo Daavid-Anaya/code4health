@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../widgets/auth_navigation_link.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../profile/presentation/widgets/custom_text_field.dart';
 import '../widgets/img_widgets.dart';
 import '../widgets/primary_action_button.dart';
 import '../widgets/text_widgets.dart';

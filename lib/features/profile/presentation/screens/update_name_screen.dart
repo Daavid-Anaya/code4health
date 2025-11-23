@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../injection_container.dart';
-import '../../domain/usecases/update_display_name_use_case.dart';
+import '../../../authentication/domain/usecases/update_display_name_use_case.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_app_bar.dart';
 

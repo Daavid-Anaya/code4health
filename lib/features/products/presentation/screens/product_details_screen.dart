@@ -1,5 +1,5 @@
 import 'package:code4health/core/constants/app_colors.dart';
-import 'package:code4health/features/authentication/presentation/widgets/build_product_header.dart';
+import 'package:code4health/features/products/presentation/widgets/build_product_header.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../domain/entities/product_entity.dart';
@@ -54,8 +54,19 @@ class ProductDetailsScreen extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.02),
 
-              // Productos similares
-              //_buildSimilarProducts(screenWidth, screenHeight),
+              // Container(
+              //   width: double.infinity,
+              //   padding: EdgeInsets.all(screenHeight * 0.02),
+              //   decoration: BoxDecoration(
+              //     color: AppColors.background,
+              //     borderRadius: BorderRadius.circular(16),
+              //     border: Border.all(color: AppColors.background),
+              //   ),
+              //   child: Column(
+              //     // Productos similares
+              //     //_buildSimilarProducts(screenWidth, screenHeight),
+              //   ),
+              // )
             ],
           ),
         ),

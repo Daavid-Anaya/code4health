@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../injection_container.dart';
-import '../../domain/error/exceptions.dart';
-import '../../domain/usecases/sign_out_use_case.dart';
-import '../../domain/usecases/update_email_use_case.dart';
+import '../../../authentication/domain/error/exceptions.dart';
+import '../../../authentication/domain/usecases/sign_out_use_case.dart';
+import '../../../authentication/domain/usecases/update_email_use_case.dart';
 import '../widgets/custom_text_field.dart';
 import '../widgets/custom_app_bar.dart';
 
