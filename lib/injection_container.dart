@@ -9,6 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'features/authentication/data/datasources/auth_remote_data_source.dart';
+import 'features/history/data/repositories/history_repository_impl.dart';
+import 'features/history/domain/repositories/history_repository.dart';
+import 'features/history/domain/usecases/add_to_history_use_case.dart';
+import 'features/history/domain/usecases/get_history_use_case.dart';
 import 'features/products/data/datasources/product_remote_data_source.dart';
 import 'features/authentication/data/repositories/auth_remote_data_source_impl.dart';
 import 'features/authentication/data/repositories/auth_repository_impl.dart';
@@ -71,6 +75,13 @@ Future<void> init() async {
   sl.registerFactory(() => GetProductByBarcodeUseCase(repository: sl()));
   sl.registerLazySingleton<ProductRepository>(() => ProductRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton<ProductRemoteDataSource>(() => ProductRemoteDataSourceImpl(client: sl()));
+
+  // --- FEATURES - HISTORY ---
+  // Repositorio (Singleton para mantener la lista en memoria)
+  sl.registerLazySingleton<HistoryRepository>(() => HistoryRepositoryImpl());
+  // Casos de Uso
+  sl.registerFactory(() => GetHistoryUseCase(repository: sl()));
+  sl.registerFactory(() => AddToHistoryUseCase(repository: sl()));
 
   // Registramos la instancia de FirebaseAuth para que esté disponible en toda la app.
   sl.registerLazySingleton(() => http.Client());

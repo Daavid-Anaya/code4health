@@ -4,6 +4,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/constants/text_styles.dart';
 import '../../../../injection_container.dart';
+import '../../../history/domain/usecases/add_to_history_use_case.dart';
 import '../../../products/domain/entities/product_entity.dart';
 import '../../../products/domain/usecases/get_product_by_barcode_use_case.dart';
 
@@ -17,6 +18,7 @@ class ScannerScreen extends StatefulWidget {
 class _ScannerScreenState extends State<ScannerScreen> {
   final MobileScannerController controller = MobileScannerController();
   final GetProductByBarcodeUseCase _getProductUseCase = sl<GetProductByBarcodeUseCase>();
+  final AddToHistoryUseCase _addToHistoryUseCase = sl<AddToHistoryUseCase>();
 
   // Variable para que represente el estado de carga/procesamiento
   bool _isProcessing = false;
@@ -41,6 +43,9 @@ class _ScannerScreenState extends State<ScannerScreen> {
       // Llama al Caso de Uso para obtener el producto desde la API
       final ProductEntity product = await _getProductUseCase.call(code);
 
+      // Guardar en el historial
+      await _addToHistoryUseCase.call(product);
+
       // Si tiene éxito, navega a la pantalla de detalles con el producto
       if (mounted) {
         Navigator.of(context).push(
@@ -63,7 +68,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
     } finally {
       // Permite un nuevo escaneo después de un breve retraso
       // para evitar escaneos múltiples accidentales.
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 4));
       if (mounted) {
         setState(() {
           _isProcessing = false;
