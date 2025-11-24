@@ -19,12 +19,19 @@
 ## ✨ Características
 
 * 🔐 **Autenticación de Usuarios:** Registro e inicio de sesión seguros.
-* 👤 **Perfil de Salud Personalizado:** Recopilación de datos del usuario (edad, peso, altura, condiciones) para ofrecer recomendaciones a medida.
+* 👤 **Perfil de Salud:** Recopilación de datos del usuario (edad, peso, altura, condiciones, datos cardiovasculares).
 * 📱 **Gestión de Perfil:** Visualización y edición de toda la información de salud del usuario.
 * 📷 **Escáner de Código de Barras:** Usa la cámara del dispositivo para escanear productos en tiempo real.
-* 📊 **Análisis de Productos:** Muestra información detallada del producto escaneado, indicando si se ajusta a las necesidades dietéticas del usuario.
+* 📊 **Información de Productos:** Muestra información detallada del producto escaneado.
 * 📚 **Historial de Escaneos:** Guarda un registro de todos los productos consultados para referencia futura.
-* 💡 **Sugerencias de Productos:** Muestra alternativas más saludables y productos similares.
+
+---
+
+## ✨ Proximas Características
+* 👤 **Perfil de Salud Personalizado:** Recopilación de datos del usuario (edad, peso, altura, condiciones, datos cardiovasculares) para ofrecer recomendaciones a medida.
+* 📱 **Visualización de Perfil Cardiovascular:** Visualización de información de salud cardiovascular.
+* 📊 **Análisis de Productos:** Muestra información detallada del producto escaneado, indicando si se ajusta a las necesidades dietéticas del usuario.
+* 💡 **Sugerencias de Productos:** Muestra alternativas más saludables de productos escaneados.
 
 ---
 
@@ -32,18 +39,25 @@
 
 <table>
   <tr>
-    <td align="center"><img src="docs/images/Inicio-sesion.jpg" width="200"><br><sub><b>Inicio de Sesión</b></sub></td>
-    <td align="center"><img src="docs/images/crear-cuenta.jpg" width="200"><br><sub><b>Crear Cuenta</b></sub></td>
-    <td align="center"><img src="docs/images/informacion-usuario.jpg" width="200"><br><sub><b>Setup de Perfil</b></sub></td>
+    <td align="center"><img src="./images/inicio_sesión.jpg" alt="Inicio de Sesión" width="200"><br><sub><b>Inicio de Sesión</b></sub></td>
+    <td align="center"><img src="./images/crear_cuenta.jpg" alt="Crear Cuenta" width="200"><br><sub><b>Crear Cuenta</b></sub></td>
+    <td align="center"><img src="./images/restablecer_contraseña.jpg" alt="Restablecer contraseña" width="200"><br><sub><b>Restablecer Contraseña</b></sub></td>
+    <td align="center"><img src="./images/información_básica.jpg" alt="Llenado de información nutricional" width="200"><br><sub><b>Datos nutricionales</b></sub></td>
+    <td align="center"><img src="./images/perfil_usuario.jpg" alt="Perfil de usuario" width="200"><br><sub><b>Perfil de Usuario</b></sub></td>
   </tr>
   <tr>
-    <td align="center"><img src="docs/images/escaner.jpg" width="200"><br><sub><b>Escáner</b></sub></td>
-    <td align="center"><img src="docs/images/historial.png" width="200"><br><sub><b>Historial</b></sub></td>
-    <td align="center"><img src="docs/images/detalles.png" width="200"><br><sub><b>Detalles de Producto</b></sub></td>
+    <td align="center"><img src="./images/perfil.jpg" alt="Opciones de cuenta" width="200"><br><sub><b>Opciones de Cuenta</b></sub></td>
+    <td align="center"><img src="./images/editar_perfil.jpg" alt="Editar perfil" width="200"><br><sub><b>Editar perfil</b></sub></td>
+    <td align="center"><img src="./images/actualizar_nombre.jpg" alt="Actualizar nombre" width="200"><br><sub><b>Actualizar Nombre</b></sub></td>
+    <td align="center"><img src="./images/actualizar_email.jpg" alt="Actualizar email" width="200"><br><sub><b>Actualizar Email</b></sub></td>
+    <td align="center"><img src="./images/actualizar_contraseña.jpg" alt="Actualizar contraseña" width="200"><br><sub><b>Actualizar Contraseña</b></sub></td>
   </tr>
    <tr>
-    <td align="center"><img src="docs/images/perfil.jpg" width="200"><br><sub><b>Perfil de Usuario</b></sub></td>
-    <td align="center" colspan="2"><img src="docs/images/edit-profile.jpg" width="400"><br><sub><b>Editar Perfil</b></sub></td>
+    <td align="center"><img src="./images/actualizar_datos_básicos.jpg" alt="Actualizar datos nutricionales" width="200"><br><sub><b>Actualizar Datos Nutricionales</b></sub></td>
+    <td align="center"><img src="./images/actualizar_datos_cardiovasculares.jpg" alt="Actualizar datos cardiovasculares" width="200"><br><sub><b>Actualizar Datos Cardiovasculares</b></sub></td>
+    <td align="center"><img src="./images/scanner.jpg" alt="Scanner" width="200"><br><sub><b>Scanner</b></sub></td>
+    <td align="center"><img src="./images/detalles_producto.jpg" alt="Detalles de producto" width="200"><br><sub><b>Detalles de Producto</b></sub></td>
+    <td align="center"><img src="./images/historial_productos.jpg" alt="Historial de productos" width="200"><br><sub><b>Historial de Productos</b></sub></td>
   </tr>
 </table>
 
