@@ -1,7 +1,6 @@
 import 'package:code4health/core/constants/app_colors.dart';
 import 'package:code4health/features/products/presentation/widgets/build_product_header.dart';
 import 'package:flutter/material.dart';
-import '../../../../core/constants/text_styles.dart';
 import '../../domain/entities/product_entity.dart';
 import '../widgets/build_info_card.dart';
 import '../widgets/build_ingredients.dart';
@@ -20,7 +19,6 @@ class ProductDetailsScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: Text(product.productName ?? 'Detalles', style: TextStyles.title(context)),
         backgroundColor: AppColors.bar,
         elevation: 0,
       ),
@@ -53,58 +51,10 @@ class ProductDetailsScreen extends StatelessWidget {
                 content: BuildIngredients(product: product),
               ),
               SizedBox(height: screenHeight * 0.02),
-
-              // Container(
-              //   width: double.infinity,
-              //   padding: EdgeInsets.all(screenHeight * 0.02),
-              //   decoration: BoxDecoration(
-              //     color: AppColors.background,
-              //     borderRadius: BorderRadius.circular(16),
-              //     border: Border.all(color: AppColors.background),
-              //   ),
-              //   child: Column(
-              //     // Productos similares
-              //     //_buildSimilarProducts(screenWidth, screenHeight),
-              //   ),
-              // )
             ],
           ),
         ),
       ),
     );
   }
-
-  Widget _buildSimilarProducts(double screenWidth, double screenHeight) {
-
-    final double itemSize = screenWidth * 0.25;
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        //Text(
-          //'Productos similares',
-          //style: TextStyles.subEncabezado(context),
-        //),
-        SizedBox(height: screenHeight * 0.02),
-        SizedBox(
-          height: itemSize,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return Container(
-                width: itemSize,
-                margin: EdgeInsets.only(right: screenWidth * 0.03),
-                decoration: BoxDecoration(
-                  color: AppColors.backgroundComponentSelect,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
 }

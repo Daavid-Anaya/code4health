@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Campo de texto para el Email
                   SizedBox(
-                    height: 50,
+                    height: 55,
                     child: CustomTextField(
                       controller: _emailController,
                       labelText: 'Email',
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   // Campo de texto para la Contraseña
                   SizedBox(
-                    height: 50,
+                    height: 55,
                     child: CustomTextField(
                       controller: _passwordController,
                       labelText: 'Contraseña',
